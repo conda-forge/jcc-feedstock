@@ -17,7 +17,7 @@ source:
 build:
   skip: true  # [win32 or linux32]
 
-  number: 0
+  number: 1
 
   rpaths: # only valid for linux
     - lib
