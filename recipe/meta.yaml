@@ -1,18 +1,15 @@
 {% set name = "jcc" %}
-{% set version = "3.0" %}
-{% set sha256 = "52dc7ae13a8e81d78afbc0f13e88ecbdf969673923425a4d65021ae241d99b91" %}
+{% set version = "3.1.dev1" %}
+{% set sha256 = "653e4c3b33d44dcf5ee5dbff7a5056e5d13f2cb717eb8d509d40e784b9c4eb7a" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
-  url: https://pypi.python.org/packages/c1/79/de30ac0a450a66be9c679a80a05b943b40c27ea962d79770698cf1c737b7/JCC-3.0.tar.gz
+  fn: {{ name }}-{{ version }}.zip
+  url: https://github.com/petrushy/jcc_svn_import/raw/master/{{ name }}-{{ version }}.zip
   sha256: {{ sha256 }}
-
-  patches:
-    - setup_lpython.patch  # [linux]
 
 build:
   skip: true  # [win32 or linux32]
