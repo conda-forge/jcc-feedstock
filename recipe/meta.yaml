@@ -7,7 +7,7 @@ package:
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
+  fn: {{ name }}-{{ version }}.zip
   url: https://github.com/petrushy/jcc_svn_import/raw/master/{{ name }}-{{ version }}.zip
   sha256: {{ sha256 }}
 
