@@ -13,11 +13,13 @@ source:
 
   patches:
     - setup_lpython.patch  # [linux]
+    - fixed_bug_PYLUCENE-36.patch
+    - fixed_bug_with_using_split_instead_of_rpartition_on_path.patch
 
 build:
   skip: true  # [win32 or linux32]
 
-  number: 1
+  number: 2
 
   rpaths: # only valid for linux
     - lib
@@ -36,11 +38,11 @@ requirements:
     - python
     - setuptools
     - toolchain
-    - openjdk 8.0.121 1  # Force anaconda openjdk
+    - openjdk 8.0.152  # Force anaconda openjdk
 
   run:
     - python
-    - openjdk 8.0.121 1  # Force anaconda openjdk
+    - openjdk 8.0.152  # Force anaconda openjdk
 
 
 test:
