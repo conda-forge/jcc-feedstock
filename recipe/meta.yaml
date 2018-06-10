@@ -53,6 +53,10 @@ test:
 
   files:
     - test/myrun_test.py
+    - test/test_test1.py
+    - test/java-example/build_and_wrap.bat
+    - test/java-example/test1class.java
+
 
 about:
   home: http://lucene.apache.org/pylucene/jcc/index.html
