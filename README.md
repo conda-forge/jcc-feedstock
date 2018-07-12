@@ -15,9 +15,9 @@ JCC is a C++ code generator for producing the code necessary to call into Java c
 Current build status
 ====================
 
-[![Linux](https://img.shields.io/circleci/project/github/conda-forge/jcc-feedstock-forked-feedstock/master.svg?label=Linux)](https://circleci.com/gh/conda-forge/jcc-feedstock-forked-feedstock)
-[![OSX](https://img.shields.io/travis/conda-forge/jcc-feedstock-forked-feedstock/master.svg?label=macOS)](https://travis-ci.org/conda-forge/jcc-feedstock-forked-feedstock)
-[![Windows](https://img.shields.io/appveyor/ci/conda-forge/jcc-feedstock-forked-feedstock/master.svg?label=Windows)](https://ci.appveyor.com/project/conda-forge/jcc-feedstock-forked-feedstock/branch/master)
+[![Linux](https://img.shields.io/circleci/project/github/conda-forge/jcc-feedstock/master.svg?label=Linux)](https://circleci.com/gh/conda-forge/jcc-feedstock)
+[![OSX](https://img.shields.io/travis/conda-forge/jcc-feedstock/master.svg?label=macOS)](https://travis-ci.org/conda-forge/jcc-feedstock)
+[![Windows](https://img.shields.io/appveyor/ci/conda-forge/jcc-feedstock/master.svg?label=Windows)](https://ci.appveyor.com/project/conda-forge/jcc-feedstock/branch/master)
 
 Current release info
 ====================
