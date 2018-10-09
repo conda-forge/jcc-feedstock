@@ -19,7 +19,7 @@ source:
 build:
   skip: true  # [win32 or linux32]
 
-  number: 2
+  number: 1002
 
   rpaths: # only valid for linux
     - lib
