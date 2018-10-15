@@ -30,8 +30,8 @@ build:
 
 requirements:
   build:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
+    # - {{ compiler('c') }}
+    #- {{ compiler('cxx') }}
     - python
     - setuptools
     - openjdk 8.0.152  # Force anaconda openjdk
@@ -48,7 +48,10 @@ test:
     - jcc
 
   files:
-    - test/myrun_test.py
+    - test/*.py
+    - test/java-example/build_and_wrap.bat
+    - test/java-example/build_and_wrap.sh
+    - test/java-example/test1class.java
 
 about:
   home: http://lucene.apache.org/pylucene/jcc/index.html

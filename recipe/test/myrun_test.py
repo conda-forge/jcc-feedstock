@@ -12,9 +12,10 @@ try:
 
 except ImportError:
     print ('JCC Import Error')
-    raise
+    sys.exit(1)
 
 except:
     print ('JCC error. Likely your JCC_JDK is wrong..')
+    sys.exit(1)
 
 sys.exit(False)
