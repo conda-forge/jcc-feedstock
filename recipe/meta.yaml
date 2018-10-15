@@ -1,5 +1,5 @@
 {% set name = "jcc" %}
-{% set version = "3.1.dev1" %}
+{% set version = "3.3.dev1" %}
 {% set sha256 = "653e4c3b33d44dcf5ee5dbff7a5056e5d13f2cb717eb8d509d40e784b9c4eb7a" %}
 
 package:
@@ -33,11 +33,11 @@ requirements:
     - python
     - setuptools
     - toolchain
-    - openjdk 8.0.121 1  # Force anaconda openjdk
+    - openjdk 8.0.152 1  # Force anaconda openjdk
 
   run:
     - python
-    - openjdk 8.0.121 1  # Force anaconda openjdk
+    - openjdk 8.0.152 1  # Force anaconda openjdk
 
 
 test:
