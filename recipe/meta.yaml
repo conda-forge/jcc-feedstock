@@ -38,8 +38,6 @@ requirements:
     - openjdk 8.0.152  # Force anaconda openjdk
 
   run:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
     - python
     - openjdk 8.0.152  # Force anaconda openjdk
 
@@ -49,6 +47,10 @@ test:
   # List all the packages/modules that `run_test.py` imports.
   imports:
     - jcc
+
+  requires:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
 
   files:
     - test/*.py
