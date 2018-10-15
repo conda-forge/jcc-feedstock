@@ -38,6 +38,8 @@ requirements:
     - openjdk 8.0.152  # Force anaconda openjdk
 
   run:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
     - python
     - openjdk 8.0.152  # Force anaconda openjdk
 
