@@ -1,6 +1,6 @@
 {% set name = "jcc" %}
 {% set version = "3.3.dev1" %}
-{% set sha256 = "653e4c3b33d44dcf5ee5dbff7a5056e5d13f2cb717eb8d509d40e784b9c4eb7a" %}
+{% set sha256 = "5bf3d36045fd617f651d48f695af0cb2009d73cfca43810980aa1094377a37aa" %}
 
 package:
   name: {{ name|lower }}
