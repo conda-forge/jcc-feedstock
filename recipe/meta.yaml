@@ -19,7 +19,7 @@ source:
 build:
   skip: true  # [win32 or linux32]
 
-  number: 2
+  number: 3
 
   rpaths: # only valid for linux
     - lib
@@ -54,7 +54,10 @@ test:
     - jcc
 
   files:
-    - test/myrun_test.py
+    - test/*.py
+    - test/java-example/build_and_wrap.bat
+    - test/java-example/build_and_wrap.sh
+    - test/java-example/test1class.java
 
 about:
   home: http://lucene.apache.org/pylucene/jcc/index.html
