@@ -1,6 +1,6 @@
 {% set name = "jcc" %}
-{% set version = "3.3.dev1" %}
-{% set sha256 = "5bf3d36045fd617f651d48f695af0cb2009d73cfca43810980aa1094377a37aa" %}
+{% set version = "3.3.dev2" %}
+{% set sha256 = "025382e6610fb08a00480ea5f0f460d4b8680511c4f6687510323d628775782c" %}
 
 package:
   name: {{ name|lower }}
@@ -24,10 +24,6 @@ build:
   has_prefix_files:
     - {{SP_DIR}}/jcc/config.py  # [linux or osx]
 
-  # The JCC for windows package does not have the right compile parameters for wrapping and needs these to be set
-  # explicitly
-
-
 requirements:
   build:
     - {{ compiler('c') }}
@@ -41,10 +37,7 @@ requirements:
     - python
     - openjdk 8.0.152  # Force anaconda openjdk
 
-
 test:
-  # Some package might need a `test/commands` key to check CLI.
-  # List all the packages/modules that `run_test.py` imports.
   imports:
     - jcc
 
