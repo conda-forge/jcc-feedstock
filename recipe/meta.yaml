@@ -1,6 +1,6 @@
 {% set name = "jcc" %}
-{% set version = "3.1.dev1" %}
-{% set sha256 = "653e4c3b33d44dcf5ee5dbff7a5056e5d13f2cb717eb8d509d40e784b9c4eb7a" %}
+{% set version = "3.3.dev2" %}
+{% set sha256 = "025382e6610fb08a00480ea5f0f460d4b8680511c4f6687510323d628775782c" %}
 
 package:
   name: {{ name|lower }}
@@ -14,7 +14,7 @@ source:
 build:
   skip: true  # [win32 or linux32]
 
-  number: 1
+  number: 0
 
   rpaths: # only valid for linux
     - lib
@@ -24,30 +24,32 @@ build:
   has_prefix_files:
     - {{SP_DIR}}/jcc/config.py  # [linux or osx]
 
-  # The JCC for windows package does not have the right compile parameters for wrapping and needs these to be set
-  # explicitly
-
-
 requirements:
   build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+  host:
     - python
     - setuptools
-    - toolchain
-    - openjdk 8.0.121 1  # Force anaconda openjdk
+    - openjdk 8.0.152  # Force anaconda openjdk
 
   run:
     - python
-    - openjdk 8.0.121 1  # Force anaconda openjdk
-
+    - openjdk 8.0.152  # Force anaconda openjdk
 
 test:
-  # Some package might need a `test/commands` key to check CLI.
-  # List all the packages/modules that `run_test.py` imports.
   imports:
     - jcc
 
+  requires:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+
   files:
-    - test/myrun_test.py
+    - test/*.py
+    - test/java-example/build_and_wrap.bat
+    - test/java-example/build_and_wrap.sh
+    - test/java-example/test1class.java
 
 about:
   home: http://lucene.apache.org/pylucene/jcc/index.html
