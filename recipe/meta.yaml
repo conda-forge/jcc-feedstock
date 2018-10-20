@@ -1,6 +1,6 @@
-{% set name = "jcc" %}
-{% set version = "3.0" %}
-{% set sha256 = "52dc7ae13a8e81d78afbc0f13e88ecbdf969673923425a4d65021ae241d99b91" %}
+{% set name = "JCC" %}
+{% set version = "3.3" %}
+{% set sha256 = "547a405b8ace0ffadd886b44259e95d8715d69e36f8d3fed00ee9ba127f3d4f2" %}
 
 package:
   name: {{ name|lower }}
@@ -8,18 +8,14 @@ package:
 
 source:
   fn: {{ name }}-{{ version }}.tar.gz
-  url: https://pypi.python.org/packages/c1/79/de30ac0a450a66be9c679a80a05b943b40c27ea962d79770698cf1c737b7/JCC-3.0.tar.gz
-  sha256: {{ sha256 }}
+  url: https://files.pythonhosted.org/packages/04/65/649b74f09c5f8db6cd142d07d4bac7b50b0ce0995174dfbb827e0a39ab9d/{{ name }}-{{ version }}.tar.gz
 
-  patches:
-    - setup_lpython.patch  # [linux]
-    - fixed_bug_PYLUCENE-36.patch
-    - fixed_bug_with_using_split_instead_of_rpartition_on_path.patch
+  sha256: {{ sha256 }}
 
 build:
   skip: true  # [win32 or linux32]
 
-  number: 2
+  number: 0
 
   rpaths: # only valid for linux
     - lib
@@ -28,10 +24,6 @@ build:
 
   has_prefix_files:
     - {{SP_DIR}}/jcc/config.py  # [linux or osx]
-
-  # The JCC for windows package does not have the right compile parameters for wrapping and needs these to be set
-  # explicitly
-
 
 requirements:
   build:
@@ -46,15 +38,19 @@ requirements:
     - python
     - openjdk 8.0.152  # Force anaconda openjdk
 
-
 test:
-  # Some package might need a `test/commands` key to check CLI.
-  # List all the packages/modules that `run_test.py` imports.
   imports:
     - jcc
 
+  requires:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+
   files:
-    - test/myrun_test.py
+    - test/*.py
+    - test/java-example/build_and_wrap.bat
+    - test/java-example/build_and_wrap.sh
+    - test/java-example/test1class.java
 
 about:
   home: http://lucene.apache.org/pylucene/jcc/index.html
