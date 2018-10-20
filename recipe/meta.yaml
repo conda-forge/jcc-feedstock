@@ -1,14 +1,15 @@
-{% set name = "jcc" %}
-{% set version = "3.3.dev2" %}
-{% set sha256 = "025382e6610fb08a00480ea5f0f460d4b8680511c4f6687510323d628775782c" %}
+{% set name = "JCC" %}
+{% set version = "3.3" %}
+{% set sha256 = "547a405b8ace0ffadd886b44259e95d8715d69e36f8d3fed00ee9ba127f3d4f2" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.zip
-  url: https://github.com/petrushy/jcc_svn_import/raw/master/{{ name }}-{{ version }}.zip
+  fn: {{ name }}-{{ version }}.tar.gz
+  url: https://files.pythonhosted.org/packages/04/65/649b74f09c5f8db6cd142d07d4bac7b50b0ce0995174dfbb827e0a39ab9d/{{ name }}-{{ version }}.tar.gz
+
   sha256: {{ sha256 }}
 
 build:
