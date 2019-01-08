@@ -23,7 +23,7 @@ build:
     - jre/lib/amd64/server/
 
   has_prefix_files:
-    - {{SP_DIR}}/jcc/config.py  # [linux or osx]
+    - {{SP_DIR}}/jcc/config.py
 
 requirements:
   build:
