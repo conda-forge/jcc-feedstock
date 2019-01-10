@@ -10,7 +10,7 @@ set JCC_CFLAGS=/EHsc;/D_CRT_SECURE_NO_WARNINGS
 set JCC_LFLAGS=/DLL;/LIBPATH:%JCC_JDK%\lib;Ws2_32.lib;jvm.lib
 set JCC_DEBUG_CFLAGS=/Od;/DDEBUG
 set JCC_JAVAC=%JCC_JDK%\bin\javac.exe
-set JCC_JAVADOC=%JCC_JDK%\bin\javac.exe
+set JCC_JAVADOC=%JCC_JDK%\bin\javadoc.exe
 
 
 
