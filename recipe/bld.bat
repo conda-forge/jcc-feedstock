@@ -4,10 +4,12 @@ set JCC_JDK=%JAVA_HOME%
 :: JCC needs to have libraries in PATH
 set PATH=%JCC_JDK%\jre\bin\server;%JCC_JDK%;%JCC_JDK%\jre\bin;%JCC_JDK%\jre\lib;%PATH%
 
-set JCC_INCLUDES=%JCC_JDK%\include;%JCC_JDK%\include\win32
-set JCC_LFLAGS=/DLL;/LIBPATH:%JCC_JDK%\lib;Ws2_32.lib;jvm.lib
-
-set
+set "JCC_INCLUDES=%JCC_JDK%\include;%JCC_JDK%\include\win32"
+set "JCC_CFLAGS=/EHsc;/D_CRT_SECURE_NO_WARNINGS"
+set "JCC_LFLAGS=/DLL;/LIBPATH:%JCC_JDK%\lib;Ws2_32.lib;jvm.lib"
+set "JCC_DEBUG_CFLAGS=/Od;/DDEBUG"
+set "JCC_JAVAC=%JCC_JDK%\bin\javac.exe"
+set "JCC_JAVADOC=%JCC_JDK%\bin\javadoc.exe"
 
 "%PYTHON%" setup.py install --single-version-externally-managed --record record.txt
 if errorlevel 1 exit 1
