@@ -1,6 +1,6 @@
 {% set name = "JCC" %}
-{% set version = "3.3" %}
-{% set sha256 = "547a405b8ace0ffadd886b44259e95d8715d69e36f8d3fed00ee9ba127f3d4f2" %}
+{% set version = "3.4" %}
+{% set sha256 = "6c7922a03f699b7fe7630938f03b7ee6eec72b6f901db047093a3180db9a0f0d" %}
 
 package:
   name: {{ name|lower }}
@@ -8,14 +8,13 @@ package:
 
 source:
   fn: {{ name }}-{{ version }}.tar.gz
-  url: https://files.pythonhosted.org/packages/04/65/649b74f09c5f8db6cd142d07d4bac7b50b0ce0995174dfbb827e0a39ab9d/{{ name }}-{{ version }}.tar.gz
-
+  url: https://files.pythonhosted.org/packages/29/f5/8660a7cd624a0c5a8c10aa6917992e00e79b387b7108e1de83101b74674a/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
 
 build:
   skip: true  # [win32 or linux32]
 
-  number: 2
+  number: 0
 
   rpaths: # only valid for linux
     - lib
