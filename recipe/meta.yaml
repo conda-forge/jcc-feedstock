@@ -46,9 +46,15 @@ test:
 
   files:
     - test/*.py
-    - test/java-example/build_and_wrap.bat
-    - test/java-example/build_and_wrap.sh
-    - test/java-example/test1class.java
+    - test/java-example/*.bat
+    - test/java-example/*.sh
+    - test/java-example/*.java
+    - test/java-example/*.py
+    - test/java-example-test-parameters/*.bat
+    - test/java-example-test-parameters/*.sh
+    - test/java-example-test-parameters/*.java
+    - test/java-example-test-parameters/*.py
+
 
 about:
   home: http://lucene.apache.org/pylucene/jcc/index.html
