@@ -17,8 +17,12 @@ print('Single matching OK')
 # Double Parameter order check
 assert type(forest.getNewOne(Mammal(), Mammal())) == type(Mammal())
 assert type(forest.getNewOne(Animal(), Animal())) == type(Animal())
+assert type(forest.getNewOne(Snake(), Snake())) == type(Snake())
+assert type(forest.getNewOne(Feline(), Feline())) == type(Feline())
 assert type(forest.getNewOne(Cat(), Cat())) == type(Cat())
+
 assert type(forest.getNewOne(Animal(), Cat())) == type(Cat())
+
 print('Double matching OK')
 
 sys.exit(False)

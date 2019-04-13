@@ -35,6 +35,14 @@ public class Test_parameter_order {
             return new Cat();
             }
 
+         public Feline getNewOne(Feline foo, Feline boo){
+            return new Feline();
+            }
+
+            public Snake getNewOne(Snake foo, Snake boo){
+            return new Snake();
+            }
+
          public Cat getNewOne(Animal foo, Cat boo){
             return new Cat();
             }

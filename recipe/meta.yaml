@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
   patches:
-    - pylucene-47.patch
+   - pylucene-47-2.patch
 
 build:
   number: 1
