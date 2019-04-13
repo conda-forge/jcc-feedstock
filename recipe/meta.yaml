@@ -11,8 +11,11 @@ source:
   url: https://files.pythonhosted.org/packages/ae/b0/776a0ffd47afa9e9de8fcad15d4836577f970997799a8a242dca168508da/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
 
+  patches:
+    - pylucene-47.patch
+
 build:
-  number: 0
+  number: 1
 
   rpaths: # only valid for linux
     - lib

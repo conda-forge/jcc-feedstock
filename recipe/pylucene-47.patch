@@ -1,0 +1,54 @@
+Index: jcc2/python.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- jcc2/python.py	(revision 1857054)
++++ jcc2/python.py	(date 1555138009207)
+@@ -29,6 +29,10 @@
+ except ImportError:
+     pass
+ 
++Class.__lt__ = lambda self, other: not self.isAssignableFrom(other)  # Make classes inheritance comparable with < (used for sorting)
++Class.__gt__ = lambda self, other: self.isAssignableFrom(other)  # Make classes inheritance comparable with >
++
++
+ python_ver = '%d.%d.%d' %(sys.version_info[0:3])
+ if python_ver < '2.4':
+     from sets import Set as set
+@@ -747,7 +751,7 @@
+ 
+     for name, methods in allMethods:
+         args, x, cardinality = methodargs(methods, superMethods)
+-        sort(methods, key=lambda x: len(x.getParameterTypes()))
++        sort(methods, key=lambda x: (len(x.getParameterTypes()), x.getParameterTypes() )) # Sort on both parameter length and order in class tree
+         method = methods[0]
+         modifiers = method.getModifiers()
+         if name == 'iterator' and iteratorMethod is None:
+Index: jcc3/python.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- jcc3/python.py	(revision 1857054)
++++ jcc3/python.py	(date 1555138038830)
+@@ -29,6 +29,10 @@
+ except ImportError:
+     pass
+ 
++Class.__lt__ = lambda self, other: not self.isAssignableFrom(other) # Make classes inheritance comparable with < (used for sorting)
++Class.__gt__ = lambda self, other: self.isAssignableFrom(other) # Make classes inheritance comparable with >
++
++
+ RESULTS = { 'boolean': 'Py_RETURN_BOOL(%s);',
+             'byte': 'return PyLong_FromLong((long) %s);',
+             'char': 'return c2p(%s);',
+@@ -734,7 +738,7 @@
+ 
+     for name, methods in allMethods:
+         args, x, cardinality = methodargs(methods, superMethods)
+-        methods.sort(key=lambda x: len(x.getParameterTypes()))
++        methods.sort(key=lambda x: (len(x.getParameterTypes()), x.getParameterTypes() )) # Sort on both parameter length and order in class tree
+         method = methods[0]
+         modifiers = method.getModifiers()
+         if name == 'iterator' and iteratorMethod is None:
