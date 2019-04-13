@@ -12,13 +12,13 @@ assert type(forest.getNewOne(Animal())) == type(Animal())
 assert type(forest.getNewOne(Feline())) == type(Feline())
 assert type(forest.getNewOne(Mammal())) == type(Mammal())
 assert type(forest.getNewOne(Snake())) == type(Snake())
+print('Single matching OK')
 
 # Double Parameter order check
 assert type(forest.getNewOne(Mammal(), Mammal())) == type(Mammal())
 assert type(forest.getNewOne(Animal(), Animal())) == type(Animal())
 assert type(forest.getNewOne(Cat(), Cat())) == type(Cat())
 assert type(forest.getNewOne(Animal(), Cat())) == type(Cat())
-
-print('interaction w java worked!')
+print('Double matching OK')
 
 sys.exit(False)
