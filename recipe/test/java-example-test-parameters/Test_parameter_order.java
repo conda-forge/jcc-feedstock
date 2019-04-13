@@ -23,4 +23,19 @@ public class Test_parameter_order {
             return new Mammal();
             }
 
+       public Mammal getNewOne(Mammal foo, Mammal boo){
+            return new Mammal();
+            }
+
+        public Animal getNewOne(Animal foo, Animal boo){
+            return new Animal();
+            }
+
+           public Cat getNewOne(Cat foo, Cat boo){
+            return new Cat();
+            }
+
+         public Cat getNewOne(Animal foo, Cat boo){
+            return new Cat();
+            }
 }
