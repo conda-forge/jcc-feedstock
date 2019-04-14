@@ -31,7 +31,7 @@ print ("type(forest.getNewOne(Cat(), Cat()))", type(forest.getNewOne(Cat(), Cat(
 assert type(forest.getNewOne(Cat(), Cat())) == type(Cat())
 
 print ("type(forest.getNewOne(Animal(), Cat()))", type(forest.getNewOne(Animal(), Cat())))
-assert type(forest.getNewOne(Animal(), Cat())) == type(Cat())
+assert type(forest.getNewOne(Animal(), Cat())) == type(Mammal())
 
 print('Double matching OK')
 

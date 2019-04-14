@@ -43,7 +43,7 @@ public class Test_parameter_order {
             return new Snake();
             }
 
-         public Cat getNewOne(Animal foo, Cat boo){
-            return new Cat();
+         public Mammal getNewOne(Animal foo, Cat boo){
+            return new Mammal();
             }
 }
