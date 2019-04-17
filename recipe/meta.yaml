@@ -11,8 +11,11 @@ source:
   url: https://files.pythonhosted.org/packages/ae/b0/776a0ffd47afa9e9de8fcad15d4836577f970997799a8a242dca168508da/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
 
+  patches:
+   - pylucene-47-3.patch  # Temporary patch to better manage PYLUCENE-47 Issue
+
 build:
-  number: 0
+  number: 1
 
   rpaths: # only valid for linux
     - lib
@@ -46,9 +49,15 @@ test:
 
   files:
     - test/*.py
-    - test/java-example/build_and_wrap.bat
-    - test/java-example/build_and_wrap.sh
-    - test/java-example/test1class.java
+    - test/java-example/*.bat
+    - test/java-example/*.sh
+    - test/java-example/*.java
+    - test/java-example/*.py
+    - test/java-example-test-parameters/*.bat
+    - test/java-example-test-parameters/*.sh
+    - test/java-example-test-parameters/*.java
+    - test/java-example-test-parameters/*.py
+
 
 about:
   home: http://lucene.apache.org/pylucene/jcc/index.html
