@@ -5,7 +5,7 @@
 # changes to this script, consider a proposal to conda-smithy so that other feedstocks can also
 # benefit from the improvement.
 
-set -xeo pipefail
+set -xeuo pipefail
 
 THISDIR="$( cd "$( dirname "$0" )" >/dev/null && pwd )"
 PROVIDER_DIR="$(basename $THISDIR)"
@@ -28,25 +28,12 @@ fi
 ARTIFACTS="$FEEDSTOCK_ROOT/build_artifacts"
 
 if [ -z "$CONFIG" ]; then
-    set +x
-    FILES=`ls .ci_support/linux_*`
-    CONFIGS=""
-    for file in $FILES; do
-        CONFIGS="${CONFIGS}'${file:12:-5}' or ";
-    done
-    echo "Need to set CONFIG env variable. Value can be one of ${CONFIGS:0:-4}"
+    echo "Need to set CONFIG env variable"
     exit 1
 fi
 
-if [ -z "${DOCKER_IMAGE}" ]; then
-    SHYAML_INSTALLED="$(shyaml --version || echo NO)"
-    if [ "${SHYAML_INSTALLED}" == "NO" ]; then
-        echo "WARNING: DOCKER_IMAGE variable not set and shyaml not installed. Falling back to condaforge/linux-anvil-comp7"
-        DOCKER_IMAGE="condaforge/linux-anvil-comp7"
-    else
-        DOCKER_IMAGE="$(cat "${FEEDSTOCK_ROOT}/.ci_support/${CONFIG}.yaml" | shyaml get-value docker_image.0 condaforge/linux-anvil-comp7 )"
-    fi
-fi
+pip install shyaml
+DOCKER_IMAGE=$(cat "${FEEDSTOCK_ROOT}/.ci_support/${CONFIG}.yaml" | shyaml get-value docker_image.0 condaforge/linux-anvil-comp7 )
 
 mkdir -p "$ARTIFACTS"
 DONE_CANARY="$ARTIFACTS/conda-forge-build-done-${CONFIG}"
