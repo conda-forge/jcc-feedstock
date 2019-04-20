@@ -1,3 +1,4 @@
+package org.jcc.test;
 
 public class Cat extends Feline {
     public void printName() {

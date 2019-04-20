@@ -1,6 +1,34 @@
 // Test case for JCC
 
+package org.jcc.test;
+
 public class Test_parameter_order {
+
+    public String constructor_name;
+
+    public Test_parameter_order(){
+        this.constructor_name = "None";
+    }
+
+    public Test_parameter_order(Animal foo){
+        this.constructor_name = "Animal";
+    }
+
+    public Test_parameter_order(Feline foo){
+        this.constructor_name = "Feline";
+    }
+
+    public Test_parameter_order(Snake foo){
+        this.constructor_name = "Snake";
+    }
+
+    public Test_parameter_order(Cat foo){
+        this.constructor_name = "Cat";
+    }
+
+    public Test_parameter_order(Mammal foo){
+        this.constructor_name = "Mammal";
+    }
 
     public Feline getNewOne(Feline foo){
             return new Feline();

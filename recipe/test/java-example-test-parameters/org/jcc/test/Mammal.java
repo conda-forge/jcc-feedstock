@@ -1,3 +1,4 @@
+package org.jcc.test;
 
 
 public class Mammal extends Animal {
