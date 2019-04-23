@@ -15,7 +15,7 @@ source:
    - pylucene-47.patch  # Temporary patch to better manage PYLUCENE-47 Issue
 
 build:
-  number: 3
+  number: 4
 
   rpaths: # only valid for linux
     - lib
