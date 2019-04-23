@@ -1,0 +1,270 @@
+Index: jcc2/python.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- jcc2/python.py	(revision 1857977)
++++ jcc2/python.py	(revision 1857978)
+@@ -18,7 +18,7 @@
+ from cpp import PRIMITIVES, INDENT, HALF_INDENT
+ from cpp import RENAME_METHOD_SUFFIX, RENAME_FIELD_SUFFIX
+ from cpp import cppname, cppnames, absname, typename, findClass
+-from cpp import line, signature, find_method, split_pkg, sort
++from cpp import line, signature, find_method, split_pkg, sort, sortSignatures
+ from cpp import Modifier, Class, Method
+ from cpp import getActualTypeArguments, getTypeParameters
+ from config import INCLUDES, CFLAGS, DEBUG_CFLAGS, LFLAGS, IMPLIB_LFLAGS, \
+@@ -747,7 +747,7 @@
+ 
+     for name, methods in allMethods:
+         args, x, cardinality = methodargs(methods, superMethods)
+-        sort(methods, key=lambda x: len(x.getParameterTypes()))
++        sortSignatures(methods)
+         method = methods[0]
+         modifiers = method.getModifiers()
+         if name == 'iterator' and iteratorMethod is None:
+@@ -785,7 +785,7 @@
+ 
+     for name, methods in extMethods:
+         args, x, cardinality = methodargs(methods, superMethods)
+-        sort(methods, key=lambda x: len(x.getParameterTypes()))
++        sortSignatures(methods)
+         method = methods[0]
+         modifiers = method.getModifiers()
+         if name == 'iterator' and iteratorMethod is None:
+Index: CHANGES
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- CHANGES	(revision 1857977)
++++ CHANGES	(revision 1857978)
+@@ -1,6 +1,7 @@
+-Version 3.4 -> 3.5
++Version 3.5 ->
+ ------------------
+- - fixed bug PYLUCENE-46
++ - fixed bug PYLUCENE-47 (with help from Petrus Hyv�nen)
++ - 
+ 
+ Version 3.3 -> 3.4
+ ------------------
+Index: jcc3/cpp.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- jcc3/cpp.py	(revision 1857977)
++++ jcc3/cpp.py	(revision 1857978)
+@@ -52,6 +52,65 @@
+     return cls
+ 
+ 
++# fix for PYLUCENE-47: method overloads need to be sorted deterministically
++# and heuristically by the so-called rank of their parameter types, trying
++# to match parameters whose classes are deeper in the class hierarchy first
++def sortSignatures(signatures, groupByName=False):
++    class Parameters(object):
++        def __init__(self, signature):
++            self.signature = signature
++            self.types = signature.getParameterTypes()
++            if groupByName:
++                self.name = signature.getName()
++
++        def __lt__(self, other):
++            # group signatures by name, lexicographically
++            if groupByName:
++                if self.name < other.name:
++                    return True
++                if self.name > other.name:
++                    return False
++
++            # group signatures by number of parameters, lowest first
++            diff = len(self.types) - len(other.types)
++            if diff < 0:
++                return True
++            if diff > 0:
++                return False
++
++            # sort signatures of equal length by the sum of class ranks
++            # so that deepest classes are considered first during calls,
++            # thus sort highest rank number first
++            diff = self.getRank() - other.getRank()
++            if diff > 0:
++                return True
++            if diff < 0:
++                return False
++
++            # sort signatures of equal rank by the names of their classes
++            # lexicographically
++            for (t_self, t_other) in zip(self.types, other.types):
++                if t_self.getName() < t_other.getName():
++                    return True
++
++            # give up, other must be larger ;-)
++            return False
++            
++        def getRank(self):
++            rank = 0
++            for item in self.types:
++                while item is not None:
++                    rank += 1
++                    item = item.getSuperclass()
++
++            return rank
++
++    parameters = [Parameters(signature) for signature in signatures]
++    parameters.sort()
++
++    signatures[:] = [params.signature for params in parameters]
++
++
+ INDENT = '  '
+ HALF_INDENT = ' '
+ 
+@@ -788,7 +847,7 @@
+                     break
+             else:
+                 constructors.append(constructor)
+-    constructors.sort(key=lambda x: len(x.getParameterTypes()))
++    sortSignatures(constructors)
+ 
+     methods = {}
+     protectedMethods = []
+@@ -825,7 +884,7 @@
+             protectedMethods.append(method)
+ 
+     methods = list(methods.values())
+-    methods.sort(key=lambda x: (x.getName(), len(x.getParameterTypes())))
++    sortSignatures(methods, groupByName=True)
+     methodNames = set([cppname(method.getName()) for method in methods])
+ 
+     for constructor in constructors:
+Index: jcc2/cpp.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- jcc2/cpp.py	(revision 1857977)
++++ jcc2/cpp.py	(revision 1857978)
+@@ -11,6 +11,7 @@
+ #   limitations under the License.
+ 
+ import os, sys, zipfile, _jcc2
++from itertools import izip
+ 
+ python_ver = '%d.%d.%d' %(sys.version_info[0:3])
+ if python_ver < '2.4':
+@@ -81,6 +82,53 @@
+     return cls
+ 
+ 
++# fix for PYLUCENE-47: method overloads need to be sorted deterministically
++# and heuristically by the so-called rank of their parameter types, trying
++# to match parameters whose classes are deeper in the class hierarchy first
++def sortSignatures(signatures, groupByName=False):
++    def _compare(sig0, sig1):
++        # group signatures by name, lexicographically
++        if groupByName:
++            diff = cmp(sig0.getName(), sig1.getName())
++            if diff != 0:
++                return diff
++
++        sig0_types = sig0.getParameterTypes()
++        sig1_types = sig1.getParameterTypes()
++
++        # group signatures by number of parameters, lowest first
++        diff = len(sig0_types) - len(sig1_types)
++        if diff != 0:
++            return diff
++
++        def _getRank(types):
++            rank = 0
++            for item in types:
++                while item is not None:
++                    rank += 1
++                    item = item.getSuperclass()
++            return rank
++        
++        # sort signatures of equal length by the sum of class ranks
++        # so that deepest classes are considered first during calls,
++        # thus sort highest rank number first
++        diff = _getRank(sig1_types) - _getRank(sig0_types)
++        if diff != 0:
++            return diff
++
++        # sort signatures of equal rank by the names of their classes
++        # lexicographically
++        for (sig0_type, sig1_type) in izip(sig0_types, sig1_types):
++            diff = cmp(sig0_type.getName(), sig1_type.getName())
++            if diff != 0:
++                return diff
++
++        # give up, sig1 must be larger ;-)
++        return -1
++            
++    sort(signatures, fn=_compare)
++
++
+ INDENT = '  '
+ HALF_INDENT = ' '
+ 
+@@ -814,7 +862,7 @@
+                     break
+             else:
+                 constructors.append(constructor)
+-    sort(constructors, key=lambda x: len(x.getParameterTypes()))
++    sortSignatures(constructors)
+ 
+     methods = {}
+     protectedMethods = []
+@@ -850,14 +898,8 @@
+         elif Modifier.isProtected(modifiers):
+             protectedMethods.append(method)
+ 
+-    def _compare(m0, m1):
+-        value = cmp(m0.getName(), m1.getName())
+-        if value == 0:
+-            value = len(m0.getParameterTypes()) - len(m1.getParameterTypes())
+-        return value
+-
+     methods = methods.values()
+-    sort(methods, fn=_compare)
++    sortSignatures(methods, groupByName=True)
+     methodNames = set([cppname(method.getName()) for method in methods])
+ 
+     for constructor in constructors:
+Index: jcc3/python.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- jcc3/python.py	(revision 1857977)
++++ jcc3/python.py	(revision 1857978)
+@@ -18,7 +18,7 @@
+ from .cpp import PRIMITIVES, INDENT, HALF_INDENT
+ from .cpp import RENAME_METHOD_SUFFIX, RENAME_FIELD_SUFFIX
+ from .cpp import cppname, cppnames, absname, typename, findClass
+-from .cpp import line, signature, find_method
++from .cpp import line, signature, find_method, sortSignatures
+ from .cpp import Modifier, Class, Method
+ from .cpp import getActualTypeArguments, getTypeParameters
+ from .config import INCLUDES, CFLAGS, DEBUG_CFLAGS, LFLAGS, IMPLIB_LFLAGS, \
+@@ -734,7 +734,7 @@
+ 
+     for name, methods in allMethods:
+         args, x, cardinality = methodargs(methods, superMethods)
+-        methods.sort(key=lambda x: len(x.getParameterTypes()))
++        sortSignatures(methods)
+         method = methods[0]
+         modifiers = method.getModifiers()
+         if name == 'iterator' and iteratorMethod is None:
+@@ -772,7 +772,7 @@
+ 
+     for name, methods in extMethods:
+         args, x, cardinality = methodargs(methods, superMethods)
+-        methods.sort(key=lambda x: len(x.getParameterTypes()))
++        sortSignatures(methods)
+         method = methods[0]
+         modifiers = method.getModifiers()
+         if name == 'iterator' and iteratorMethod is None:
