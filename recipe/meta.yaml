@@ -12,10 +12,10 @@ source:
   sha256: {{ sha256 }}
 
   patches:
-   - pylucene-47-including-constructors.patch  # Temporary patch to better manage PYLUCENE-47 Issue
+   - pylucene-47.patch  # Temporary patch to better manage PYLUCENE-47 Issue
 
 build:
-  number: 2
+  number: 3
 
   rpaths: # only valid for linux
     - lib
@@ -23,7 +23,6 @@ build:
     - jre/lib/amd64/server/
 
   has_prefix_files:
-    # - {{SP_DIR}}/jcc/config.py
     - jcc/config.py
 
 requirements:
