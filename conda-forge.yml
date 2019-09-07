@@ -8,4 +8,6 @@ travis:
 
 channels:
   targets:
-    - [conda-forge]
+  - [conda-forge]
+provider:
+  win: azure
