@@ -11,6 +11,9 @@ source:
   url: https://files.pythonhosted.org/packages/3f/6f/123875ea113fefd766a01136fecfcb0da8b841e0cac6882ee592a14f6f2c/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
 
+  patches:
+    - module.patch  # add __module__ attribute
+
 build:
   number: 1
 

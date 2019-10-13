@@ -1,0 +1,15 @@
+Index: jcc3/sources/JObject.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- jcc3/sources/JObject.cpp	(revision 1868265)
++++ jcc3/sources/JObject.cpp	(date 1570992126453)
+@@ -46,6 +46,7 @@
+ 
+ static PyGetSetDef t_JObject_properties[] = {
+     { "_jobject", (getter) t_JObject__getJObject, NULL, NULL, NULL },
++    { "__module__", NULL, NULL, NULL},
+     { NULL, NULL, NULL, NULL, NULL }
+ };
+ 
