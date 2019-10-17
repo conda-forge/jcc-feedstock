@@ -12,7 +12,9 @@ source:
   sha256: {{ sha256 }}
 
   patches:
-    - module.patch  # add __module__ attribute
+    - _-_fixed_bug_with_wrongly_assuming_1BYTE_KIND_python_unicode_strings_to_be_utf-8_.patch
+    - made_the_1BYTE_KIND_-__jchar_case_a_bit_faster.patch
+    - added_setting_of_type___module___for_all_generated_wrapper_types_(python_3)_.patch
 
 build:
   number: 1
