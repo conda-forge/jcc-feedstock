@@ -52,6 +52,12 @@ class Test_JCC_order(unittest.TestCase):
 
         print('Constructor single matching OK')
 
+    def test_has_module_attribute(self):
+        from org.jcc.test import Cat
+        assert hasattr(Cat, '__module__')
+
+        print("The Cat has a __module__ attribute")
+
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(Test_JCC_order)
     ret = not unittest.TextTestRunner(verbosity=2).run(suite).wasSuccessful()
