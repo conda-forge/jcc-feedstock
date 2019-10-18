@@ -68,7 +68,7 @@ about:
 
   summary: 'a C++ code generator for calling Java from C++/Python'
   description: |
-    JCC is a C++ code generator for producing the code necessary to call into Java classes from CPython via Java’s Native Invocation Interface (JNI).
+    JCC is a C++ code generator for producing the code necessary to call into Java classes from CPython via Java’s Native Invocation Interface (JNI) .
 
   doc_url: http://lucene.apache.org/pylucene/jcc/index.html
 
