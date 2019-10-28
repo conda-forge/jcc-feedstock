@@ -18,7 +18,7 @@ source:
     - Added___module___to_JArray()_types__.patch
 
 build:
-  number: 2
+  number: 3
 
   rpaths: # only valid for linux
     - lib
