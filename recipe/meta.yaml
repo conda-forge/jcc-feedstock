@@ -16,9 +16,10 @@ source:
     - made_the_1BYTE_KIND_-__jchar_case_a_bit_faster.patch
     - added_setting_of_type___module___for_all_generated_wrapper_types_(python_3)_.patch
     - Added___module___to_JArray()_types__.patch
+    - added_support_for_Python_3_8_.patch
 
 build:
-  number: 2
+  number: 3
 
   rpaths: # only valid for linux
     - lib
