@@ -11,16 +11,6 @@ set "JCC_DEBUG_CFLAGS=/Od;/DDEBUG"
 set "JCC_JAVAC=%JCC_JDK%\bin\javac.exe"
 set "JCC_JAVADOC=%JCC_JDK%\bin\javadoc.exe"
 
-set COMP_DIR=C:\Program Files (x86)\IntelSWTools\compilers_and_libraries\windows
-
-set DISTUTILS_USE_SDK=1
-set MSSdk=1
-
-REM This one is essential for getting DLL linkage on Py3.5+
-set "PY_VCRUNTIME_REDIST=%LIBARARY_BIN%\vcruntime140.dll"
-set VS=vs2015
-call "%COMP_DIR%\bin\ifortvars.bat" %INTEL_ARCH% %VS%
-
 "%PYTHON%" setup.py install --single-version-externally-managed --record record.txt
 if errorlevel 1 exit 1
 
