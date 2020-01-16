@@ -19,7 +19,7 @@ source:
     - added_support_for_Python_3_8_.patch
 
 build:
-  number: 3
+  number: 4
 
   rpaths: # only valid for linux
     - lib
@@ -36,7 +36,7 @@ requirements:
   host:
     - python
     - setuptools
-    - openjdk 8.0.152  # Force anaconda openjdk
+    - openjdk 8.0.152  # Force anaconda openjdk 
 
   run:
     - python
