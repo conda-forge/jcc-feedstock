@@ -36,7 +36,7 @@ requirements:
   host:
     - python
     - setuptools
-    - openjdk 8.0.152  # Force anaconda openjdk
+    - openjdk 8.0.152  # Force anaconda openjdk 
     - vs2015_runtime  # [win]
 
   run:
