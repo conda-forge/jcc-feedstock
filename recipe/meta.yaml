@@ -29,11 +29,11 @@ requirements:
   host:
     - python
     - setuptools
-    - default::openjdk
+    - defaults::openjdk
 
   run:
     - python
-    - default::openjdk
+    - defaults::openjdk
 
 test:
   imports:
