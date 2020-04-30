@@ -58,6 +58,22 @@ class Test_JCC_order(unittest.TestCase):
 
         print("The Cat has a __module__ attribute")
 
+
+    def test_default_java_method(self):
+        from org.jcc.test import Cat
+        mycat = Cat()
+
+        assert mycat.getJavaFeets() == 4
+
+    def test_default_method(self):
+        from org.jcc.test import Cat, Being
+        mycat = Cat()
+
+        assert Being.cast_(mycat).getFeets() == 4  # This is from the Cats class (no overloaded method)
+        assert mycat.getFeetsWithOverride() == 8   # This is from the Cats class, an overloaded method
+        assert Being.cast_(mycat).getFeetsWithOverride() == 8  # This is still taken from the Cats class
+
+
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(Test_JCC_order)
     ret = not unittest.TextTestRunner(verbosity=2).run(suite).wasSuccessful()
