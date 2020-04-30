@@ -66,7 +66,7 @@ class Test_JCC_order(unittest.TestCase):
         assert mycat.getJavaFeets() == 4
 
     def test_default_method(self):
-        from org.jcc.test import Cat
+        from org.jcc.test import Cat, Being
         mycat = Cat()
 
         assert Being.cast_(mycat).getFeets() == 4  # This is from the Cats class (no overloaded method)
