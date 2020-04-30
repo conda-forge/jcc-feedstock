@@ -26,14 +26,16 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - openjdk 8.0.152  # Force anaconda openjdk
+
   host:
     - python
     - setuptools
-    - defaults::openjdk
+    - openjdk 8.0.152  # Force anaconda openjdk
 
   run:
     - python
-    - defaults::openjdk
+    - openjdk 8.0.152  # Force anaconda openjdk
 
 test:
   imports:
