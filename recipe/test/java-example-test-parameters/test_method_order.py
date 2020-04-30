@@ -69,8 +69,9 @@ class Test_JCC_order(unittest.TestCase):
         from org.jcc.test import Cat
         mycat = Cat()
 
-        assert mycat.getFeets() == 4
-
+        assert Being.cast_(mycat).getFeets() == 4  # This is from the Cats class (no overloaded method)
+        assert mycat.getFeetsWithOverride() == 8   # This is from the Cats class, an overloaded method
+        assert Being.cast_(mycat).getFeetsWithOverride() == 8  # This is still taken from the Cats class
 
 
 if __name__ == '__main__':

@@ -8,4 +8,10 @@ interface Being {
     {
         return 4;
     }
+
+    default int getFeetsWithOverride()
+    {
+        return 4;
+    }
+
 }

@@ -10,4 +10,10 @@ public class Cat extends Feline implements Being {
         return this.getFeets();
     }
 
+    @Override
+    public int getFeetsWithOverride()
+    {
+        return 8;
+    }
+
 }
