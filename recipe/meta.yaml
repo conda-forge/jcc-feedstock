@@ -29,11 +29,11 @@ requirements:
   host:
     - python
     - setuptools
-    - openjdk 8.0.152  # Force anaconda openjdk 
+    - default::openjdk
 
   run:
     - python
-    - openjdk 8.0.152  # Force anaconda openjdk
+    - default::openjdk
 
 test:
   imports:
