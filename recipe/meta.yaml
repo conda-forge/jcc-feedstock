@@ -1,6 +1,6 @@
 {% set name = "JCC" %}
-{% set version = "3.6" %}
-{% set sha256 = "375f25b7186a67327ba9c031ee357b85c17d1569f4c2dd1d2fccea39eb670048" %}
+{% set version = "3.7" %}
+{% set sha256 = "c5dd41c2b72733d2573af9f3cb982bcbadd419323fd743e96e4f1e6d3257d6eb" %}
 
 package:
   name: {{ name|lower }}
@@ -8,18 +8,11 @@ package:
 
 source:
   fn: {{ name }}-{{ version }}.tar.gz
-  url: https://files.pythonhosted.org/packages/3f/6f/123875ea113fefd766a01136fecfcb0da8b841e0cac6882ee592a14f6f2c/{{ name }}-{{ version }}.tar.gz
+  url: https://files.pythonhosted.org/packages/60/4b/ca6f79930cefc71ed39fbe792aedc129ff652570273fe042a35812a40501/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
 
-  patches:
-    - _-_fixed_bug_with_wrongly_assuming_1BYTE_KIND_python_unicode_strings_to_be_utf-8_.patch
-    - made_the_1BYTE_KIND_-__jchar_case_a_bit_faster.patch
-    - added_setting_of_type___module___for_all_generated_wrapper_types_(python_3)_.patch
-    - Added___module___to_JArray()_types__.patch
-    - added_support_for_Python_3_8_.patch
-
 build:
-  number: 4
+  number: 0
 
   rpaths: # only valid for linux
     - lib
