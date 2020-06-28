@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 0
+  number: 1
 
   rpaths: # only valid for linux
     - lib
@@ -26,14 +26,18 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - openjdk 8.0.152  # Force anaconda openjdk
+    # - openjdk 8.0.152  # Force anaconda openjdk
 
   host:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
     - python
     - setuptools
     - openjdk 8.0.152  # Force anaconda openjdk
 
   run:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
     - python
     - openjdk 8.0.152  # Force anaconda openjdk
 
