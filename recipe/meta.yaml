@@ -32,14 +32,15 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - python
-    - setuptools
-    - openjdk 8.0.152  # Force anaconda openjdk
+    - pip
+    #- setuptools
+    - defaults::openjdk 8  # Force anaconda openjdk
 
   run:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - python
-    - openjdk 8.0.152  # Force anaconda openjdk
+    - defaults::openjdk 8  # Force anaconda openjdk
 
 test:
   imports:
