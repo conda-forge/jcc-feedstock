@@ -34,13 +34,13 @@ requirements:
     - python
     - pip
     #- setuptools
-    - main::openjdk 8  # Force anaconda openjdk
+    - openjdk 8.0.152  # Force anaconda openjdk
 
   run:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - python
-    - main::openjdk 8  # Force anaconda openjdk
+    - openjdk 8.0.152  # Force anaconda openjdk
 
 test:
   imports:
