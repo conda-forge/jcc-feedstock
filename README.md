@@ -9,7 +9,7 @@ Feedstock license: BSD 3-Clause
 
 Summary: a C++ code generator for calling Java from C++/Python
 
-JCC is a C++ code generator for producing the code necessary to call into Java classes from CPython via Java’s Native Invocation Interface (JNI).
+JCC is a C++ code generator for producing the code necessary to call into Java classes from CPython via Java’s Native Invocation Interface  (JNI).
 
 
 Current build status
