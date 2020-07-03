@@ -11,7 +11,7 @@ then
   export NO_SHARED=1
   printenv
 
-  $PYTHON setup.py install --single-version-externally-managed --record record.txt
+  $PYTHON -m pip install . --no-deps -vv
 
 else
   # GNU/Linux recipe
