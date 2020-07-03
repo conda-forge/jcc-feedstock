@@ -12,9 +12,9 @@ if defined _JCC_PATH_CONDA_BACKUP (
 )
 
 :: adding compile parameters explicitly as relocation for conda does not seem to detect JCC under windows
-@set "JCC_INCLUDES="
-@set "JCC_CFLAGS="
-@set "JCC_LFLAGS="
-@set "JCC_DEBUG_CFLAGS="
-@set "JCC_JAVAC="
-@set "JCC_JAVADOC="
+::@set "JCC_INCLUDES="
+::@set "JCC_CFLAGS="
+::@set "JCC_LFLAGS="
+::@set "JCC_DEBUG_CFLAGS="
+::@set "JCC_JAVAC="
+::@set "JCC_JAVADOC="
