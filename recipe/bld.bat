@@ -15,13 +15,14 @@ set "JCC_JAVADOC=%JCC_JDK%\bin\javadoc.exe"
 if errorlevel 1 exit 1
 
 :: ensure that JCC_JDK is set correctly by invoking an activate script
-set ACTIVATE_DIR=%PREFIX%\etc\conda\activate.d
-set DEACTIVATE_DIR=%PREFIX%\etc\conda\deactivate.d
-mkdir %ACTIVATE_DIR%
-mkdir %DEACTIVATE_DIR%
 
-copy %RECIPE_DIR%\scripts\activate.bat %ACTIVATE_DIR%\jcc-activate.bat
-if errorlevel 1 exit 1
+setlocal EnableDelayedExpansion
 
-copy %RECIPE_DIR%\scripts\deactivate.bat %DEACTIVATE_DIR%\jcc-deactivate.bat
-if errorlevel 1 exit 1
+:: Copy the [de]activate scripts to %PREFIX%\etc\conda\[de]activate.d.
+:: This will allow them to be run on environment activation.
+for %%F in (activate deactivate) DO (
+    if not exist %PREFIX%\etc\conda\%%F.d mkdir %PREFIX%\etc\conda\%%F.d
+    copy %RECIPE_DIR%\scripts\%%F.bat %PREFIX%\etc\conda\%%F.d\%PKG_NAME%_%%F.bat
+    :: Copy unix shell activation scripts, needed by Windows Bash users
+    copy %RECIPE_DIR%\scripts\%%F.sh %PREFIX%\etc\conda\%%F.d\%PKG_NAME%_%%F.sh
+)
