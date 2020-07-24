@@ -1,4 +1,5 @@
 :: Restore previous JCC_JDK and PATH env vars if they were set.
+setlocal enabledelayedexpansion
 
 set "JCC_JDK="
 if defined _JCC_JDK_CONDA_BACKUP (

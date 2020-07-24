@@ -1,3 +1,6 @@
+setlocal enabledelayedexpansion
+
+
 :: Paths assume openjdk installed by conda
 set JCC_JDK=%JAVA_HOME%
 
