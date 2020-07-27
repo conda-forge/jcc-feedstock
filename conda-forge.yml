@@ -11,3 +11,5 @@ channels:
   - [conda-forge]
 provider:
   win: azure
+
+channel_priority: flexible
