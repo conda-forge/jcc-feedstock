@@ -5,11 +5,11 @@ Home: http://lucene.apache.org/pylucene/jcc/index.html
 
 Package license: Apache-2.0
 
-Feedstock license: BSD 3-Clause
+Feedstock license: BSD-3-Clause
 
 Summary: a C++ code generator for calling Java from C++/Python
 
-JCC is a C++ code generator for producing the code necessary to call into Java classes from CPython via Java’s Native Invocation Interface (JNI).
+JCC is a C++ code generator for producing the code necessary to call into Java classes from CPython via Java’s Native Invocation Interface  (JNI).
 
 
 Current build status
