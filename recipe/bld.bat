@@ -1,18 +1,19 @@
 setlocal enabledelayedexpansion
 
+echo "---- STARTING BUILD FILE ----"
 
 :: Paths assume openjdk installed by conda
-set JCC_JDK=%JAVA_HOME%
+set JCC_JDK=%CONDA_PREFIX%\Library
 
 :: JCC needs to have libraries in PATH
-set PATH=%JAVA_HOME%\jre\bin\server;%JAVA_HOME%;%JAVA_HOME%\jre\bin;%JAVA_HOME%\jre\lib;%PATH%
+set PATH=%CONDA_PREFIX%\Library\jre\bin\server;%CONDA_PREFIX%\Library;%CONDA_PREFIX%\Library\jre\bin;%CONDA_PREFIX%\Library\jre\lib;%PATH%
 
-set "JCC_INCLUDES=%JAVA_HOME%\include;%JAVA_HOME%\include\win32"
+set "JCC_INCLUDES=%CONDA_PREFIX%\Library\include;%CONDA_PREFIX%\Library\include\win32"
 set "JCC_CFLAGS=/EHsc;/D_CRT_SECURE_NO_WARNINGS"
 set "JCC_LFLAGS=/DLL;/LIBPATH:%JAVA_HOME%\lib;Ws2_32.lib;jvm.lib"
 set "JCC_DEBUG_CFLAGS=/Od;/DDEBUG"
-set "JCC_JAVAC=%JAVA_HOME%\bin\javac.exe"
-set "JCC_JAVADOC=%JAVA_HOME%\bin\javadoc.exe"
+set "JCC_JAVAC=%CONDA_PREFIX%\Library\bin\javac.exe"
+set "JCC_JAVADOC=%CONDA_PREFIX%\Library\bin\javadoc.exe"
 
 "%PYTHON%" -m pip install . --no-deps -vv
 if errorlevel 1 exit 1
@@ -29,3 +30,6 @@ for %%F in (activate deactivate) DO (
     :: Copy unix shell activation scripts, needed by Windows Bash users
     copy %RECIPE_DIR%\scripts\%%F.sh %PREFIX%\etc\conda\%%F.d\%PKG_NAME%_%%F.sh
 )
+
+echo "---- RESULT ----"
+set
