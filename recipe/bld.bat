@@ -15,7 +15,8 @@ set "JCC_DEBUG_CFLAGS=/Od;/DDEBUG"
 set "JCC_JAVAC=%CONDA_PREFIX%\Library\bin\javac.exe"
 set "JCC_JAVADOC=%CONDA_PREFIX%\Library\bin\javadoc.exe"
 
-"%PYTHON%" -m pip install . --no-deps -vv
+"%PYTHON%" setup.py install --single-version-externally-managed --record=record.txt
+
 if errorlevel 1 exit 1
 
 :: ensure that JCC_JDK is set correctly by invoking an activate script
