@@ -1,5 +1,8 @@
+setlocal enabledelayedexpansion
+
+
 :: Paths assume openjdk installed by conda
-set JCC_JDK=%JAVA_HOME%
+set JCC_JDK=%PREFIX%\Library
 
 :: JCC needs to have libraries in PATH
 set PATH=%JCC_JDK%\jre\bin\server;%JCC_JDK%;%JCC_JDK%\jre\bin;%JCC_JDK%\jre\lib;%PATH%
