@@ -3,17 +3,17 @@ setlocal enabledelayedexpansion
 echo "---- STARTING BUILD FILE ----"
 
 :: Paths assume openjdk installed by conda
-set JCC_JDK=%CONDA_PREFIX%\Library
+set JCC_JDK=%PREFIX%\Library
 
 :: JCC needs to have libraries in PATH
-set PATH=%CONDA_PREFIX%\Library\jre\bin\server;%CONDA_PREFIX%\Library;%CONDA_PREFIX%\Library\jre\bin;%CONDA_PREFIX%\Library\jre\lib;%PATH%
+set PATH=%PREFIX%\Library\jre\bin\server;%PREFIX%\Library;%PREFIX%\Library\jre\bin;%PREFIX%\Library\jre\lib;%PATH%
 
-set "JCC_INCLUDES=%CONDA_PREFIX%\Library\include;%CONDA_PREFIX%\Library\include\win32"
+set "JCC_INCLUDES=%PREFIX%\Library\include;%PREFIX%\Library\include\win32"
 set "JCC_CFLAGS=/EHsc;/D_CRT_SECURE_NO_WARNINGS"
 set "JCC_LFLAGS=/DLL;/LIBPATH:%JAVA_HOME%\lib;Ws2_32.lib;jvm.lib"
 set "JCC_DEBUG_CFLAGS=/Od;/DDEBUG"
-set "JCC_JAVAC=%CONDA_PREFIX%\Library\bin\javac.exe"
-set "JCC_JAVADOC=%CONDA_PREFIX%\Library\bin\javadoc.exe"
+set "JCC_JAVAC=%PREFIX%\Library\bin\javac.exe"
+set "JCC_JAVADOC=%PREFIX%\Library\bin\javadoc.exe"
 
 "%PYTHON%" setup.py install --single-version-externally-managed --record=record.txt
 
