@@ -10,7 +10,9 @@ channels:
   targets:
   - [conda-forge]
 provider:
-  win: azure
+  linux: azure
+  osx: azure
+  win: appveyor
 
 conda_forge_output_validation: true
 
