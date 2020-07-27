@@ -30,7 +30,7 @@ requirements:
     - python
     - pip
     - setuptools
-    - openjdk 8.0.152  # Force anaconda openjdk
+    - openjdk #8.0.152  # Force anaconda openjdk
 
   host:
     - {{ compiler('c') }}
@@ -38,14 +38,14 @@ requirements:
     - python
     - pip
     - setuptools
-    - openjdk 8.0.152  # Force anaconda openjdk
+    - openjdk #8.0.152  # Force anaconda openjdk
 
   run:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - python
     - setuptools
-    - openjdk 8.0.152  # Force anaconda openjdk
+    - openjdk #8.0.152  # Force anaconda openjdk
 
 test:
   imports:
