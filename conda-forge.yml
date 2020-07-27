@@ -11,4 +11,6 @@ channels:
   - [conda-forge]
 provider:
   win: azure
+
+channel_priority: flexible
 conda_forge_output_validation: true
