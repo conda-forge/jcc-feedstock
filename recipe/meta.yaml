@@ -1,6 +1,6 @@
 {% set name = "JCC" %}
-{% set version = "3.7" %}
-{% set sha256 = "c5dd41c2b72733d2573af9f3cb982bcbadd419323fd743e96e4f1e6d3257d6eb" %}
+{% set version = "3.8" %}
+{% set sha256 = "2651031b8ff5243c83b4275f01434691b298119fb69d06a409212199b5687ef1" %}
 
 package:
   name: {{ name|lower }}
@@ -8,11 +8,12 @@ package:
 
 source:
   fn: {{ name }}-{{ version }}.tar.gz
-  url: https://files.pythonhosted.org/packages/60/4b/ca6f79930cefc71ed39fbe792aedc129ff652570273fe042a35812a40501/{{ name }}-{{ version }}.tar.gz
+  url: https://files.pythonhosted.org/packages/95/6c/d747625b4667ff6e50d5260ad676a3700b2548dd64e5f57897f76d494ec2/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
 
 build:
-  number: 1
+  # skip: True  # [win]  Right now the conda-build is not detecting the prefix for windows https://github.com/conda/conda-build/issues/3909 Works in conda-buld 3.18.11
+  number: 0
 
   rpaths: # only valid for linux
     - lib
