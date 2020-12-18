@@ -23,7 +23,7 @@ then
 else
   # GNU/Linux recipe
   export JCC_ARGSEP=";"
-	export JCC_LFLAGS="-v;-Wl,-v;-L${CONDA_PREFIX}/lib/amd64;-ljava;-L${CONDA_PREFIX}/lib/amd64/server;-ljvm;-lverify;-Wl,-rpath=${CONDA_PREFIX}/lib/amd64:${CONDA_PREFIX}/lib/amd64/server"
+	export JCC_LFLAGS="-v;-Wl,-v;-L${CONDA_PREFIX}/lib;-ljava;-L${CONDA_PREFIX}/lib/server;-ljvm;-lverify;-Wl,-rpath=${CONDA_PREFIX}/lib:${CONDA_PREFIX}/lib/server"
 	export JCC_JAVAC=${CONDA_PREFIX}/bin/javac
 	export JCC_CFLAGS="-v;-fno-strict-aliasing;-Wno-write-strings;-D__STDC_FORMAT_MACROS"
   export JCC_DEBUG_CFLAGS="-O0;-g;-DDEBUG"
