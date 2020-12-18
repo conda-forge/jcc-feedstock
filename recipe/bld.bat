@@ -2,7 +2,7 @@
 set JCC_JDK=%JAVA_HOME%
 
 :: JCC needs to have libraries in PATH
-set PATH=%JCC_JDK%\jre\bin\server;%JCC_JDK%;%JCC_JDK%\jre\bin;%JCC_JDK%\jre\lib;%PATH%
+set PATH=%JCC_JDK%\bin\server;%JCC_JDK%;%JCC_JDK%\bin;%JCC_JDK%\lib;%PATH%
 
 set "JCC_INCLUDES=%JCC_JDK%\include;%JCC_JDK%\include\win32"
 set "JCC_CFLAGS=/EHsc;/D_CRT_SECURE_NO_WARNINGS"
