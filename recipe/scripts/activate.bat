@@ -7,7 +7,7 @@
 set "JCC_JDK=%CONDA_PREFIX%\Library"
 
 @set "_JCC_PATH_CONDA_BACKUP=%PATH%"
-@set "PATH=%CONDA_PREFIX%\Library\jre\bin\server;%CONDA_PREFIX%\Library;%CONDA_PREFIX%\Library\jre\bin;%PATH%"
+@set "PATH=%CONDA_PREFIX%\Library\bin\server;%CONDA_PREFIX%\Library;%CONDA_PREFIX%\Library\bin;%PATH%"
 
 :: adding compile parameters explicitly as relocation for conda does not seem to detect JCC  path properly
 @set "JCC_INCLUDES=%CONDA_PREFIX%\Library\include;%CONDA_PREFIX%\Library\include\win32"
