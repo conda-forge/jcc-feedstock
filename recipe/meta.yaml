@@ -13,7 +13,7 @@ source:
 
 build:
   # skip: True  # [win]  Right now the conda-build is not detecting the prefix for windows https://github.com/conda/conda-build/issues/3909 Works in conda-buld 3.18.11
-  number: 1
+  number: 2
 
   rpaths: # only valid for linux
     - lib
@@ -27,16 +27,16 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - openjdk 8.0.152  # Force anaconda openjdk
+    - openjdk
 
   host:
     - python
     - setuptools
-    - openjdk 8.0.152  # Force anaconda openjdk
+    - openjdk
 
   run:
     - python
-    - openjdk 8.0.152  # Force anaconda openjdk
+    - openjdk
 
 test:
   imports:
