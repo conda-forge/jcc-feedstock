@@ -17,7 +17,7 @@ build:
 
   rpaths: # only valid for linux
     - lib
-    - lib/server/
+    - lib/server
 
   has_prefix_files:
     - jcc/config.py
