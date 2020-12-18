@@ -26,16 +26,16 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - openjdk
+    - openjdk 10
 
   host:
     - python
     - setuptools
-    - openjdk
+    - openjdk 10
 
   run:
     - python
-    - openjdk
+    - openjdk 10
 
 test:
   imports:
