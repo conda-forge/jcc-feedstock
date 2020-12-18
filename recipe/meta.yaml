@@ -27,16 +27,16 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - openjdk
+    - openjdk 8
 
   host:
     - python
     - setuptools
-    - openjdk
+    - openjdk 8
 
   run:
     - python
-    - openjdk
+    - openjdk 8
 
 test:
   imports:
