@@ -13,7 +13,7 @@ source:
 
 build:
   # skip: True  # [win]  Right now the conda-build is not detecting the prefix for windows https://github.com/conda/conda-build/issues/3909 Works in conda-buld 3.18.11
-  number: 2
+  number: 3
 
   rpaths: # only valid for linux
     - lib
