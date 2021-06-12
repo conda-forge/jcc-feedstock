@@ -8,7 +8,7 @@ package:
 
 source:
   fn: {{ name }}-{{ version }}.tar.gz
-  url: https://files.pythonhosted.org/packages/95/6c/4dd526bbf12ce20a750e958aa09b0097fc792ccc75fa3a15f1523db82ccb/{{ name }}-{{ version }}.tar.gz
+  url: https://files.pythonhosted.org/packages/b6/38/4dd526bbf12ce20a750e958aa09b0097fc792ccc75fa3a15f1523db82ccb/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
 
 build:
