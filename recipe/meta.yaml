@@ -12,8 +12,8 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  # skip: True  # [win]  Right now the conda-build is not detecting the prefix for windows https://github.com/conda/conda-build/issues/3909 Works in conda-buld 3.18.11
-  number: 0
+  skip: True  # [win and py==310]   The DLL file is not found under windows and python 3.10 currently
+  number: 1
 
   rpaths: # only valid for linux
     - lib
@@ -28,11 +28,13 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - openjdk 8
+    - pip
 
   host:
     - python
     - setuptools
     - openjdk 8
+    - pip
 
   run:
     - python
