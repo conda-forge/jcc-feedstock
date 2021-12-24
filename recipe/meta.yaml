@@ -1,6 +1,6 @@
 {% set name = "JCC" %}
 {% set version = "3.11" %}
-{% set sha256 = "1ad7c61d00cca90d8e9e0d93385b55f2dcdaa31fe4a672acd8b1432f50943fb3" %}
+{% set sha256 = "b6fd1e2919d982845f1a8a37d213f13bcab87b393347b618bf4cb31a7d994739" %}
 
 package:
   name: {{ name|lower }}
@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 2
+  number: 0
 
   rpaths: # only valid for linux
     - lib
