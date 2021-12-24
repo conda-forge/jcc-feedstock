@@ -26,7 +26,8 @@ fi
 
 printenv
 
-$PYTHON setup.py install --single-version-externally-managed --record record.txt
+#$PYTHON setup.py install --single-version-externally-managed --record record.txt
+$PYTHON -m pip install . -vv
 # ensure that JCC_JDK is set correctly by invoking an activate script
 
 ACTIVATE_DIR=$PREFIX/etc/conda/activate.d
