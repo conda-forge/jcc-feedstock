@@ -36,7 +36,7 @@ requirements:
     - pip
 
   run:
-    - python <=3.9.7
+    - python
     - openjdk 8  # Force anaconda openjdk
 
 test:
