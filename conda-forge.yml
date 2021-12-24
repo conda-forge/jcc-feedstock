@@ -4,5 +4,10 @@ channels:
 provider:
   win: azure
 
+azure:
+  settings_win:
+      pool:
+          vmImage: windows-2019
+
 channel_priority: flexible
 conda_forge_output_validation: true
