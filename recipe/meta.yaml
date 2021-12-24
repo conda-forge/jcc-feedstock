@@ -1,5 +1,5 @@
 {% set name = "JCC" %}
-{% set version = "3.10" %}
+{% set version = "3.11" %}
 {% set sha256 = "1ad7c61d00cca90d8e9e0d93385b55f2dcdaa31fe4a672acd8b1432f50943fb3" %}
 
 package:
@@ -8,7 +8,7 @@ package:
 
 source:
   fn: {{ name }}-{{ version }}.tar.gz
-  url: https://files.pythonhosted.org/packages/97/c6/9249f9cc99404e782ce06b3a3710112c32783df59e9bd5ef94cd2771ccaa/{{ name }}-{{ version }}.tar.gz
+  url: https://files.pythonhosted.org/packages/aa/4d/09c5d09e844b2ec8b176486ade1390fa3329b938a8ec425a395fd1ea0a88/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
 
 build:
