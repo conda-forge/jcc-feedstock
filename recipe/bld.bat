@@ -11,7 +11,7 @@ set "JCC_DEBUG_CFLAGS=/Od;/DDEBUG"
 set "JCC_JAVAC=%JCC_JDK%\bin\javac.exe"
 set "JCC_JAVADOC=%JCC_JDK%\bin\javadoc.exe"
 
-:: "%PYTHON%" setup.py install --single-version-externally-managed --record record.txt
+::"%PYTHON%" setup.py install --single-version-externally-managed --record record.txt
 "%PYTHON%" -m pip install . -vv
 
 if errorlevel 1 exit 1

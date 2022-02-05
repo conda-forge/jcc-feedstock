@@ -1,6 +1,6 @@
 {% set name = "JCC" %}
-{% set version = "3.10" %}
-{% set sha256 = "1ad7c61d00cca90d8e9e0d93385b55f2dcdaa31fe4a672acd8b1432f50943fb3" %}
+{% set version = "3.11" %}
+{% set sha256 = "b6fd1e2919d982845f1a8a37d213f13bcab87b393347b618bf4cb31a7d994739" %}
 
 package:
   name: {{ name|lower }}
@@ -8,12 +8,12 @@ package:
 
 source:
   fn: {{ name }}-{{ version }}.tar.gz
-  url: https://files.pythonhosted.org/packages/97/c6/9249f9cc99404e782ce06b3a3710112c32783df59e9bd5ef94cd2771ccaa/{{ name }}-{{ version }}.tar.gz
+  url: https://files.pythonhosted.org/packages/aa/4d/09c5d09e844b2ec8b176486ade1390fa3329b938a8ec425a395fd1ea0a88/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
 
 build:
-  skip: True  # [win and py==310]   The DLL file is not found under windows and python 3.10 currently
-  number: 1
+  skip: True  # [win and py>=38]
+  number: 0
 
   rpaths: # only valid for linux
     - lib
@@ -38,7 +38,7 @@ requirements:
 
   run:
     - python
-    - openjdk 8  # Force anaconda openjdk
+    - openjdk 8
 
 test:
   imports:
