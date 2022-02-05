@@ -12,6 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
+  skip: True  # [win and py>=38]
   number: 0
 
   rpaths: # only valid for linux
