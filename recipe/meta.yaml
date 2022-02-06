@@ -13,7 +13,7 @@ source:
 
 build:
   #skip: True  # [win and py>=38]
-  number: 0
+  number: 1
 
   rpaths: # only valid for linux
     - lib
