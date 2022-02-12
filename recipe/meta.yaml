@@ -16,6 +16,7 @@ source:
 build:
   number: 2
 
+
   rpaths: # only valid for linux
     - lib
     - jre/lib/amd64/

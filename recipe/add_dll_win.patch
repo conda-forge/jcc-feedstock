@@ -24,6 +24,7 @@ Index: jcc3/python.py
      if shared:
          line(out, 0, "import os, sys")
          line(out)
+
 +
 +        line(out, 0, "if hasattr(os, 'add_dll_directory'):")
 +        line(out, 1, "for location in (('bin', 'client'),('bin', 'server'),('jre', 'bin', 'client'),('jre', 'bin', 'server')):")
@@ -32,10 +33,12 @@ Index: jcc3/python.py
 +        line(out, 3,"os.add_dll_directory(path)")
 +        line(out, 3,"break")
 +
+
          line(out, 0, "if sys.platform == 'win32':")
          if find_jvm_dll:
              line(out, 1, "from jcc.windows import add_jvm_dll_directory_to_path")
 @@ -1629,6 +1637,14 @@
+
          line(out, 0, "from . import %s", extname)
      else:
          line(out, 0, "import os")
