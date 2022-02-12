@@ -14,8 +14,7 @@ source:
     - add_dll_win.patch
 
 build:
-  number: 2
-
+  number: 3
 
   rpaths: # only valid for linux
     - lib
@@ -29,18 +28,18 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - openjdk 8
+    - openjdk 8.*
     - pip
 
   host:
     - python
     - setuptools
-    - openjdk 8
+    - openjdk 8.*
     - pip
 
   run:
     - python
-    - openjdk 8
+    - openjdk 8.*
 
 test:
   imports:
