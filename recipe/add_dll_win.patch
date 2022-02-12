@@ -5,7 +5,7 @@ Index: jcc3/__init__.py
 @@ -28,6 +28,13 @@
              path.insert(0, eggpath)
              os.environ['Path'] = os.pathsep.join(path)
- 
+
 +if hasattr(os, 'add_dll_directory'):
 +  for location in (('bin', 'client'),('bin', 'server'),('jre', 'bin', 'client'),('jre', 'bin', 'server')):
 +    path = os.path.join(os.environ['JAVA_HOME'], *location)
@@ -14,7 +14,7 @@ Index: jcc3/__init__.py
 +      break
 +
  import jcc._jcc3 as _jcc3
- 
+
  # used when jcc is invoked with -m
 Index: jcc3/python.py
 ===================================================================
