@@ -10,10 +10,11 @@ source:
   fn: {{ name }}-{{ version }}.tar.gz
   url: https://files.pythonhosted.org/packages/aa/4d/09c5d09e844b2ec8b176486ade1390fa3329b938a8ec425a395fd1ea0a88/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:
+    - add_dll_win.patch
 
 build:
-  #skip: True  # [win and py>=38]
-  number: 0
+  number: 1
 
   rpaths: # only valid for linux
     - lib
@@ -31,14 +32,13 @@ requirements:
     - pip
 
   host:
-    - python <=3.9.7  # [win]
-    - python  # [not win]
+    - python
     - setuptools
     - openjdk 8
     - pip
 
   run:
-    - python <=3.9.7
+    - python
     - openjdk 8
 
 test:
