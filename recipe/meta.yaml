@@ -14,7 +14,6 @@ source:
     - add_dll_win.patch
 
 build:
-  #skip: True  # [win and py>=38]
   number: 1
 
   rpaths: # only valid for linux
