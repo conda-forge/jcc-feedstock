@@ -10,6 +10,8 @@ source:
   fn: {{ name }}-{{ version }}.tar.gz
   url: https://files.pythonhosted.org/packages/aa/4d/09c5d09e844b2ec8b176486ade1390fa3329b938a8ec425a395fd1ea0a88/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:
+    - add_dll_win.patch
 
 build:
   #skip: True  # [win and py>=38]
