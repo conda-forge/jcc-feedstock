@@ -1,0 +1,188 @@
+Index: jcc3/__init__.py
+===================================================================
+--- jcc3/__init__.py	(revision 1897994)
++++ jcc3/__init__.py	(working copy)
+@@ -16,7 +16,7 @@
+ 
+ if sys.platform == 'win32':
+ 
+-    if '--find-jvm-dll' in sys.argv:
++    if '--find-jvm-dll' in sys.argv or (sys.version_info.major == 3 and sys.version_info.minor >=8):
+         from .windows import add_jvm_dll_directory_to_path
+         add_jvm_dll_directory_to_path()
+ 
+Index: jcc3/python.py
+===================================================================
+--- jcc3/python.py	(revision 1897994)
++++ jcc3/python.py	(working copy)
+@@ -1616,21 +1616,21 @@
+     if not os.path.isdir(modulePath):
+         os.makedirs(modulePath)
+ 
++    # Generate the __init__.py file
+     out = open(os.path.join(modulePath, '__init__.py'), 'w')
+     line(out)
+-    if shared:
+-        line(out, 0, "import os, sys")
+-        line(out)
+-        line(out, 0, "if sys.platform == 'win32':")
+-        if find_jvm_dll:
+-            line(out, 1, "from jcc.windows import add_jvm_dll_directory_to_path")
+-            line(out, 1, "add_jvm_dll_directory_to_path()")
+-        line(out, 1, "import jcc")
+-        line(out, 0, "from . import %s", extname)
+-    else:
+-        line(out, 0, "import os")
+-        line(out, 0, "from . import %s", extname)
++    line(out, 0, "import os")
+     line(out)
++
++    # line(out, 0, "if sys.platform == 'win32':")
++    if find_jvm_dll or (sys.platform == 'win32' and sys.version_info.major == 3 and sys.version_info.minor >=8):  # Not sure why this test would be in generated code, it is given it is same platform?
++        #line(out, 0, "import jcc")
++        line(out, 0, "from .windows import add_jvm_dll_directory_to_path")
++        line(out, 0, "add_jvm_dll_directory_to_path()")
++        modules.append(os.path.join(os.path.dirname(os.path.realpath(__file__)),'windows.py'))  # Pack windows.py into target if needed
++    
++    line(out, 0, "from . import %s", extname)
++    line(out)
+     line(out, 0, '__module_dir__ = os.path.abspath(os.path.dirname(__file__))')
+ 
+     package_data = []
+Index: jcc3/windows.py
+===================================================================
+--- jcc3/windows.py	(revision 1897994)
++++ jcc3/windows.py	(working copy)
+@@ -10,7 +10,7 @@
+ #   See the License for the specific language governing permissions and
+ #   limitations under the License.
+ 
+-import os, winreg
++import os, winreg, sys
+ 
+ 
+ class WindowsRegistry(object):
+@@ -32,54 +32,91 @@
+         self.handle.Close()
+ 
+ 
+-def get_jvm_dll_directory(client_or_server="client"):
++def get_jvm_dll_directory():
++    """
++    Checks JCC_JDK, JAVA_HOME, windows registry to find jvm.dll
+ 
+-    jre_key = r"SOFTWARE\JavaSoft\Java Runtime Environment"
+-    jdk_key = r"SOFTWARE\JavaSoft\Java Development Kit"
+-    current_key = r"%s\%s"
++    Raises:
++        ValueError: If no jvm.dll could be found
+ 
+-    registry = None
+-    try:
+-        registry = WindowsRegistry()
++    Returns:
++        str: Path to jvm.dll, None if not found
++    """
+ 
+-        try: # try JRE
+-            version = registry.get(jre_key, "CurrentVersion")
+-            path = registry.get(current_key %(jre_key, version), "JavaHome")
+-            if not os.path.exists(path):
+-                path = None
+-        except:
+-            path = None
++    # First check environment variable JCC_JDK
++    path = os.getenv('JCC_JDK')
+ 
+-        if not path:
+-            try: # try JDK
+-                version = registry.get(jdk_key, "CurrentVersion")
+-                path = registry.get(current_key %(jdk_key, version), "JavaHome")
+-                if os.path.exists(path):
+-                    path = os.path.abspath(os.path.join(path, "jre"))
+-                else:
++    #  check environment variable JAVA_HOME
++    if path is None:
++        path = os.getenv('JAVA_HOME')
++
++    # Check Windows Registry if nothing yet
++    if path is None:
++        jre_key = r"SOFTWARE\JavaSoft\Java Runtime Environment"
++        jdk_key = r"SOFTWARE\JavaSoft\Java Development Kit"
++        current_key = r"%s\%s"
++
++        registry = None
++        try:
++            registry = WindowsRegistry()
++
++            try: # try JRE
++                version = registry.get(jre_key, "CurrentVersion")
++                path = registry.get(current_key %(jre_key, version), "JavaHome")
++                if not os.path.exists(path):
+                     path = None
+             except:
+                 path = None
+ 
+-    finally:
+-        if registry is not None:
+-            registry.close()
++            if not path:
++                try: # try JDK
++                    version = registry.get(jdk_key, "CurrentVersion")
++                    path = registry.get(current_key %(jdk_key, version), "JavaHome")
++                    if os.path.exists(path):
++                        path = os.path.abspath(os.path.join(path, "jre"))
++                    else:
++                        path = None
++                except:
++                    path = None
+ 
++        finally:
++            if registry is not None:
++                registry.close()
++
++    # Traverse the found path to identify if there is a jvm.dll somewhere there
+     if path:
+-        path = os.path.abspath(os.path.join(path, "bin", client_or_server))
+-        if os.path.exists(os.path.join(path, "jvm.dll")):
+-            return path
++        for location in (('bin', 'client'),('bin', 'server'),('jre', 'bin', 'client'),('jre', 'bin', 'server')):
++            jvm_path = os.path.abspath(os.path.join(path, *location))
++            if os.path.exists(os.path.join(jvm_path, "jvm.dll")):
++                return jvm_path
+ 
+     return None
+ 
+ 
+ def add_jvm_dll_directory_to_path():
++    """
++    Triggers the search for jvm.dll
++    And adds the dll search path for python.
+ 
+-    path = os.environ['Path'].split(os.pathsep)
++    Raises:
++        ValueError: If no jvm.dll could be found
++
++    Returns:
++       bool: True if successful
++    """
++    
+     dll_path = get_jvm_dll_directory()
+-    if dll_path is not None:
++
++    if dll_path is None:
++        raise ValueError("jvm.dll could not be found")
++
++    if sys.version_info.major == 3 and sys.version_info.minor >=8:
++        # From python 3.8 use add_dll_directory instead of PATH
++        os.add_dll_directory(dll_path)
++
++    else:
++        path = os.environ['Path'].split(os.pathsep)
+         path.append(dll_path)
+         os.environ['Path'] = os.pathsep.join(path)
+-        return True
+-
+-    raise ValueError("jvm.dll could not be found")
++    
++    return True
