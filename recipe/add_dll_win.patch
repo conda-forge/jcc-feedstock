@@ -1,0 +1,135 @@
+Index: CHANGES
+===================================================================
+--- CHANGES	(revision 1898114)
++++ CHANGES	(working copy)
+@@ -1,6 +1,7 @@
+ Version 3.11 ->
+ ---------------------
+  - fixed bug with not checking presence of compiled extension directory
++ - --find-jvm-dll changed to a string defaulting to 'client' for py >= 3.8
+  - 
+ 
+ Version 3.10 -> 3.11
+Index: jcc3/__init__.py
+===================================================================
+--- jcc3/__init__.py	(revision 1898114)
++++ jcc3/__init__.py	(working copy)
+@@ -16,9 +16,14 @@
+ 
+ if sys.platform == 'win32':
+ 
+-    if '--find-jvm-dll' in sys.argv:
++    try:
++        find_jvm_dll = sys.argv[sys.argv.index('--find_jvm_dll') + 1]
++    except:
++        find_jvm_dll = "client" if sys.version_info >= (3, 8) else None
++
++    if find_jvm_dll:
+         from .windows import add_jvm_dll_directory_to_path
+-        add_jvm_dll_directory_to_path()
++        add_jvm_dll_directory_to_path(find_jvm_dll)
+ 
+     from jcc.config import SHARED
+     if SHARED:
+Index: jcc3/__main__.py
+===================================================================
+--- jcc3/__main__.py	(revision 1898114)
++++ jcc3/__main__.py	(working copy)
+@@ -77,7 +77,9 @@
+                               binaries, faster
+     --find-jvm-dll          - Windows only: extract the directory containing
+                               jvm.dll from the registry and append it to the
+-                              Path at runtime
++                              DLL Path at runtime; one of 'client', 'server'.
++                              With python 3.8 and above, --find_jvm_dll defaults
++                              to 'client'.
+ 
+   Actions:
+     --build                 - generate the wrapper and compile it
+Index: jcc3/cpp.py
+===================================================================
+--- jcc3/cpp.py	(revision 1898114)
++++ jcc3/cpp.py	(working copy)
+@@ -449,7 +449,7 @@
+     dist = False
+     wheel = False
+     wininst = False
+-    find_jvm_dll = False
++    find_jvm_dll = "client" if sys.version_info >= (3, 8) else None
+     compiler = None
+     generics = hasattr(_jcc3, "Type")
+     arch = []
+@@ -575,7 +575,8 @@
+             elif arg == '--no-generics':
+                 generics = False
+             elif arg == '--find-jvm-dll':
+-                find_jvm_dll = True
++                i += 1
++                find_jvm_dll = args[i]
+             elif arg == '--resources':
+                 i += 1
+                 resources.append(args[i])
+Index: jcc3/python.py
+===================================================================
+--- jcc3/python.py	(revision 1898114)
++++ jcc3/python.py	(working copy)
+@@ -1624,7 +1624,7 @@
+         line(out, 0, "if sys.platform == 'win32':")
+         if find_jvm_dll:
+             line(out, 1, "from jcc.windows import add_jvm_dll_directory_to_path")
+-            line(out, 1, "add_jvm_dll_directory_to_path()")
++            line(out, 1, "add_jvm_dll_directory_to_path('%s')" %(find_jvm_dll))
+         line(out, 1, "import jcc")
+         line(out, 0, "from . import %s", extname)
+     else:
+Index: jcc3/windows.py
+===================================================================
+--- jcc3/windows.py	(revision 1898114)
++++ jcc3/windows.py	(working copy)
+@@ -32,7 +32,7 @@
+         self.handle.Close()
+ 
+ 
+-def get_jvm_dll_directory(client_or_server="client"):
++def get_jvm_dll_directory_from_registry(client_or_server):
+ 
+     jre_key = r"SOFTWARE\JavaSoft\Java Runtime Environment"
+     jdk_key = r"SOFTWARE\JavaSoft\Java Development Kit"
+@@ -73,13 +73,32 @@
+     return None
+ 
+ 
+-def add_jvm_dll_directory_to_path():
++def get_jvm_dll_directory_from_env(client_or_server):
+ 
+-    path = os.environ['Path'].split(os.pathsep)
+-    dll_path = get_jvm_dll_directory()
++    path = os.getenv('JCC_JDK') or os.getenv('JAVA_HOME')
++    if path:
++        # Traverse the found path to identify if there is a jvm.dll somewhere
++        for location in (('bin', client_or_server),
++                         ('jre', 'bin', client_or_server)):
++            jvm_path = os.path.abspath(os.path.join(path, *location))
++            if os.path.exists(os.path.join(jvm_path, "jvm.dll")):
++                return jvm_path
++
++    return None
++
++
++def add_jvm_dll_directory_to_path(client_or_server="client"):
++
++    dll_path = (get_jvm_dll_directory_from_env(client_or_server) or
++                get_jvm_dll_directory_from_registry(client_or_server))
+     if dll_path is not None:
+-        path.append(dll_path)
+-        os.environ['Path'] = os.pathsep.join(path)
++        if hasattr(os, 'add_dll_directory'):  # python >= 3.8
++            os.add_dll_directory(dll_path)
++        else:
++            path = os.environ['Path'].split(os.pathsep)
++            path.append(dll_path)
++            os.environ['Path'] = os.pathsep.join(path)
++
+         return True
+ 
+     raise ValueError("jvm.dll could not be found")
