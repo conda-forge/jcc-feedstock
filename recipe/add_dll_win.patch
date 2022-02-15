@@ -1,6 +1,6 @@
 Index: CHANGES
 ===================================================================
---- CHANGES	(revision 1897014)
+--- CHANGES	(revision 1898114)
 +++ CHANGES	(working copy)
 @@ -1,6 +1,7 @@
  Version 3.11 ->
@@ -12,7 +12,7 @@ Index: CHANGES
  Version 3.10 -> 3.11
 Index: jcc3/__init__.py
 ===================================================================
---- jcc3/__init__.py	(revision 1891004)
+--- jcc3/__init__.py	(revision 1898114)
 +++ jcc3/__init__.py	(working copy)
 @@ -16,9 +16,14 @@
  
@@ -33,7 +33,7 @@ Index: jcc3/__init__.py
      if SHARED:
 Index: jcc3/__main__.py
 ===================================================================
---- jcc3/__main__.py	(revision 1891004)
+--- jcc3/__main__.py	(revision 1898114)
 +++ jcc3/__main__.py	(working copy)
 @@ -77,7 +77,9 @@
                                binaries, faster
@@ -48,7 +48,7 @@ Index: jcc3/__main__.py
      --build                 - generate the wrapper and compile it
 Index: jcc3/cpp.py
 ===================================================================
---- jcc3/cpp.py	(revision 1891004)
+--- jcc3/cpp.py	(revision 1898114)
 +++ jcc3/cpp.py	(working copy)
 @@ -449,7 +449,7 @@
      dist = False
@@ -71,7 +71,7 @@ Index: jcc3/cpp.py
                  resources.append(args[i])
 Index: jcc3/python.py
 ===================================================================
---- jcc3/python.py	(revision 1897014)
+--- jcc3/python.py	(revision 1898114)
 +++ jcc3/python.py	(working copy)
 @@ -1624,7 +1624,7 @@
          line(out, 0, "if sys.platform == 'win32':")
@@ -84,7 +84,7 @@ Index: jcc3/python.py
      else:
 Index: jcc3/windows.py
 ===================================================================
---- jcc3/windows.py	(revision 1891004)
+--- jcc3/windows.py	(revision 1898114)
 +++ jcc3/windows.py	(working copy)
 @@ -32,7 +32,7 @@
          self.handle.Close()
