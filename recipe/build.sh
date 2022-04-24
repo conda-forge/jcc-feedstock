@@ -1,4 +1,5 @@
 #!/bin/bash
+cd jcc
 
 export JCC_JDK=$JAVA_HOME
 

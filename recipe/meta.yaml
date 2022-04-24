@@ -1,17 +1,19 @@
 {% set name = "JCC" %}
-{% set version = "3.11" %}
-{% set sha256 = "b6fd1e2919d982845f1a8a37d213f13bcab87b393347b618bf4cb31a7d994739" %}
+{% set version = "3.12" %}
+{% set sha256 = "e8552f3577d4d03dbf417428ac24aa17cae984b2d42790f2c6db18133db0710f" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
-  url: https://files.pythonhosted.org/packages/aa/4d/09c5d09e844b2ec8b176486ade1390fa3329b938a8ec425a395fd1ea0a88/{{ name }}-{{ version }}.tar.gz
+  # fn: {{ name }}-{{ version }}.tar.gz
+  fn: pylucene-9.1.0-src.tar.gz
+  # url: https://files.pythonhosted.org/packages/aa/4d/09c5d09e844b2ec8b176486ade1390fa3329b938a8ec425a395fd1ea0a88/{{ name }}-{{ version }}.tar.gz
+  url: https://dist.apache.org/repos/dist/dev/lucene/pylucene/9.1.0-rc4/pylucene-9.1.0-src.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    - add_dll_win.patch
+  # patches:
+  #  - add_dll_win.patch
 
 build:
   number: 3
@@ -43,7 +45,7 @@ requirements:
 
 test:
   imports:
-    - jcc
+    - jcc  # [not win]
 
   requires:
     - {{ compiler('c') }}
@@ -59,6 +61,10 @@ test:
     - test/java-example-test-parameters/*.sh
     - test/java-example-test-parameters/org/jcc/test/*.java
     - test/java-example-test-parameters/*.py
+    - test/java-example-shared/*.bat
+    - test/java-example-shared/*.sh
+    - test/java-example-shared/*.java
+    - test/java-example-shared/*.py
 
 about:
   home: http://lucene.apache.org/pylucene/jcc/index.html

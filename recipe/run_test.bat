@@ -1,5 +1,5 @@
-"%PYTHON%" test/myrun_test.py
-if errorlevel 1 exit 1
+::"%PYTHON%" test/myrun_test.py
+::if errorlevel 1 exit 1
 
 pushd test\java-example
   call "build_and_wrap.bat"
@@ -19,3 +19,13 @@ popd
 
 "%PYTHON%" test/java-example-test-parameters/test_method_order.py
 if errorlevel 1 exit 1
+
+
+:: pushd test\java-example-shared
+::  call "build_and_wrap.bat"
+::  if errorlevel 1 exit 1
+
+:: popd
+
+:: "%PYTHON%" test/java-example-shared/test_test3.py
+:: if errorlevel 1 exit 1
