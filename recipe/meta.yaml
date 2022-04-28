@@ -1,22 +1,18 @@
 {% set name = "JCC" %}
 {% set version = "3.12" %}
-{% set sha256 = "e8552f3577d4d03dbf417428ac24aa17cae984b2d42790f2c6db18133db0710f" %}
+{% set sha256 = "36a2ec9fa4f14ae33fb846ae231c7e054284eeedb84226f521acb5b7d0e23a0f" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  # fn: {{ name }}-{{ version }}.tar.gz
-  fn: pylucene-9.1.0-src.tar.gz
-  # url: https://files.pythonhosted.org/packages/aa/4d/09c5d09e844b2ec8b176486ade1390fa3329b938a8ec425a395fd1ea0a88/{{ name }}-{{ version }}.tar.gz
-  url: https://dist.apache.org/repos/dist/dev/lucene/pylucene/9.1.0-rc4/pylucene-9.1.0-src.tar.gz
+  fn: {{ name }}-{{ version }}.tar.gz
+  url: https://files.pythonhosted.org/packages/fa/bf/c8ccdb84fb38986c9e1ec537e42db1d7c4d59491bcd30ae4798faadd3d9c/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  # patches:
-  #  - add_dll_win.patch
 
 build:
-  number: 3
+  number: 0
 
   rpaths: # only valid for linux
     - lib
