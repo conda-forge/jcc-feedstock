@@ -1,20 +1,8 @@
-channels:
-  targets:
-    - [conda-forge]
-provider:
-  win: azure
-
-azure:
-  settings_win:
-      pool:
-          vmImage: windows-2019
-
-channel_priority: flexible
 conda_forge_output_validation: true
-
+github:
+  branch_name: main
+  tooling_branch_name: main
+conda_build:
+  pkg_format: '2'
 azure:
-
-  # toggle for storing the conda build_artifacts directory (including the
-  # built packages) as an Azure pipeline artifact that can be downloaded
   store_build_artifacts: True
-
