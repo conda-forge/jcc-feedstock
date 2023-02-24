@@ -32,8 +32,8 @@ requirements:
     - pip
 
   host:
-    - python  # [build_platform != target_platform]
-    - setuptools  # [build_platform != target_platform]
+    - python
+    - setuptools
     - openjdk 8.*
     - pip
 
