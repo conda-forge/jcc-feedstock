@@ -1,11 +1,11 @@
-About jcc
-=========
+About jcc-feedstock
+===================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/jcc-feedstock/blob/main/LICENSE.txt)
 
 Home: http://lucene.apache.org/pylucene/jcc/index.html
 
 Package license: Apache-2.0
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/jcc-feedstock/blob/main/LICENSE.txt)
 
 Summary: a C++ code generator for calling Java from C++/Python
 
