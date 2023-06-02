@@ -1,0 +1,39 @@
+Index: setup.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/setup.py b/setup.py
+--- a/setup.py	(revision 1910187)
++++ b/setup.py	(date 1685742919996)
+@@ -10,12 +10,14 @@
+ #   See the License for the specific language governing permissions and
+ #   limitations under the License.
+ 
+-import os, sys, platform, subprocess
++import os, sys, platform, subprocess, sysconfig
+ 
+ jcc_ver = '3.13'
+ machine = platform.machine()
+ using_python2 = sys.version_info < (3,)
+ 
++print("Platform through sysconfig.get_platform():", sysconfig.get_platform())
++
+ if not using_python2 and sys.version_info < (3, 3):
+     raise RuntimeError('''
+ Python 3 is supported from version 3.3, you are running version %s.%s'''
+@@ -23,10 +25,12 @@
+ 
+ if machine.startswith("iPod") or machine.startswith("iPhone"):
+     platform = 'ipod'
+-elif sys.platform == "win32" and "--compiler=mingw32" in sys.argv:
++elif sysconfig.get_platform().startswith("win32") and "--compiler=mingw32" in sys.argv:
+     platform = 'mingw32'
+-elif sys.platform.startswith('linux'):
++elif sysconfig.get_platform().startswith('linux'):
+     platform = 'linux'
++elif sysconfig.get_platform().startswith('macosx'):
++    platform = 'darwin'
+ else:
+     platform = sys.platform
+ 
