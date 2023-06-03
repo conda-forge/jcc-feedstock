@@ -8,5 +8,5 @@ azure:
   store_build_artifacts: True
   
 build_platform:
-  osx_arm64: osx_64
+  osx_arm64: osx_arm64
 test: native
