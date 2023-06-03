@@ -10,8 +10,8 @@ source:
   fn: {{ name }}-{{ version }}.tar.gz
   url: https://files.pythonhosted.org/packages/a8/a5/bb6344ffe68a2987535becc33c32587e8c57f5971864926c078dff10ac4f/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    - use_sysconfig.patch
+  # patches:
+  #  - use_sysconfig.patch
 
 build:
   number: 4
