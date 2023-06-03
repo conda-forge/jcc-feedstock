@@ -2,27 +2,48 @@
 
 export JCC_JDK=$JAVA_HOME
 
-if [ "$(uname)" == "Darwin" ]
-then
-  export JCC_ARGSEP=";"
-  export JCC_INCLUDES="$PREFIX/include;$PREFIX/include/darwin"
-  export JCC_LFLAGS="-v;-L$PREFIX/jre/lib;-ljava;-L$PREFIX/jre/lib/server;-ljvm;-Wl,-rpath;-Wl,$PREFIX/jre/lib;-Wl,-rpath;-Wl,$PREFIX/jre/lib/server;-mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
-  export JCC_CFLAGS="-fno-strict-aliasing;-Wno-write-strings;-Qunused-arguments;-mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET;-std=c++11;-stdlib=libc++"
-  export JCC_DEBUG_CFLAGS="-O0;-g;-DDEBUG"
-  export JCC_JAVAC="javac;-source;1.8;-target;1.8"
-  export JCC_JAVADOC="javadoc"
-  export NO_SHARED=1
+OS=$(uname)
+ARCH=$(uname -m)
 
+if [  "$OS"  == "Darwin" ]
+then
+  if [ "$ARCH" == "arm64" ]; then
+      echo "Running on macOS with M1 (ARM architecture)"
+      # Add code for M1 architecture
+  elif [ "$ARCH" == "x86_64" ]; then
+      echo "Running on macOS with Intel (x86_64 architecture)"
+      export JCC_ARGSEP=";"
+      export JCC_INCLUDES="$PREFIX/include;$PREFIX/include/darwin"
+      export JCC_LFLAGS="-v;-L$PREFIX/jre/lib;-ljava;-L$PREFIX/jre/lib/server;-ljvm;-Wl,-rpath;-Wl,$PREFIX/jre/lib;-Wl,-rpath;-Wl,$PREFIX/jre/lib/server;-mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
+      export JCC_CFLAGS="-fno-strict-aliasing;-Wno-write-strings;-Qunused-arguments;-mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET;-std=c++11;-stdlib=libc++"
+      export JCC_DEBUG_CFLAGS="-O0;-g;-DDEBUG"
+      export JCC_JAVAC="javac;-source;1.8;-target;1.8"
+      export JCC_JAVADOC="javadoc"
+      export NO_SHARED=1
+  else
+      echo "Running on macOS with unknown architecture"
+      # Handle other cases
+  fi
+elif [ "$OS" == "Linux" ]; then
+    if [ "$ARCH" == "x86_64" ]; then
+        echo "Running on Linux with Intel (x86_64 architecture)"
+        # GNU/Linux recipe
+        export JCC_ARGSEP=";"
+        export JCC_INCLUDES="$PREFIX/include;$PREFIX/include/linux"
+        export JCC_LFLAGS="-v;-Wl,-v;-L$PREFIX/jre/lib/amd64;-ljava;-L$PREFIX/jre/lib/amd64/server;-ljvm;-lverify;-Wl,-rpath=$PREFIX/jre/lib/amd64:$PREFIX/jre/lib/amd64/server"
+        export JCC_JAVAC=$PREFIX/bin/javac
+        export JCC_CFLAGS="-v;-fno-strict-aliasing;-Wno-write-strings;-D__STDC_FORMAT_MACROS"
+        export JCC_DEBUG_CFLAGS="-O0;-g;-DDEBUG"
+        export JCC_JAVADOC="javadoc"
+    else
+        echo "Running on Linux with unknown architecture"
+        # Handle other cases
+    fi
 else
-  # GNU/Linux recipe
-  export JCC_ARGSEP=";"
-  export JCC_INCLUDES="$PREFIX/include;$PREFIX/include/linux"
-  export JCC_LFLAGS="-v;-Wl,-v;-L$PREFIX/jre/lib/amd64;-ljava;-L$PREFIX/jre/lib/amd64/server;-ljvm;-lverify;-Wl,-rpath=$PREFIX/jre/lib/amd64:$PREFIX/jre/lib/amd64/server"
-  export JCC_JAVAC=$PREFIX/bin/javac
-  export JCC_CFLAGS="-v;-fno-strict-aliasing;-Wno-write-strings;-D__STDC_FORMAT_MACROS"
-  export JCC_DEBUG_CFLAGS="-O0;-g;-DDEBUG"
-  export JCC_JAVADOC="javadoc"
+    echo "Running on unknown OS"
+    # Handle other cases
 fi
+
 
 printenv
 
