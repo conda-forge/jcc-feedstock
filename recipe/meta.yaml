@@ -14,7 +14,9 @@ source:
    - use_sysconfig.patch
 
 build:
-  number: 4
+  number: 5
+  skip: True  # [osx and py>38]
+  skip: False  # [arm64]
 
   rpaths: # only valid for linux
     - lib
@@ -42,6 +44,7 @@ requirements:
 
   run:
     - python
+    - setuptools
     - openjdk 8.*
 
 test:
