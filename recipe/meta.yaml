@@ -15,8 +15,6 @@ source:
 
 build:
   number: 7
-  skip: True  # [osx and py>38]
-  skip: False  # [arm64]
 
   rpaths: # only valid for linux
     - lib
