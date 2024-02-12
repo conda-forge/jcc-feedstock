@@ -1,0 +1,22 @@
+Subject: [PATCH] use Py_SET_TYPE with python >= 3.11
+---
+Index: jcc3/sources/functions.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/jcc3/sources/functions.cpp b/jcc3/sources/functions.cpp
+--- a/jcc3/sources/functions.cpp	(revision 1904982)
++++ b/jcc3/sources/functions.cpp	(revision 1904981)
+@@ -1739,11 +1739,7 @@
+ 
+         if (isExtension)
+         {
+-#if PY_VERSION_HEX >= 0x030b0000
+             Py_SET_TYPE(*type, PY_TYPE(FinalizerClass));
+-#else
+-            Py_TYPE(*type) = PY_TYPE(FinalizerClass);
+-#endif
+             Py_INCREF(PY_TYPE(FinalizerClass));
+         }
+ 

@@ -1,0 +1,320 @@
+Subject: [PATCH] added support for --generate
+---
+Index: jcc3/__main__.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/jcc3/__main__.py b/jcc3/__main__.py
+--- a/jcc3/__main__.py	(revision 1915627)
++++ b/jcc3/__main__.py	(revision 1915626)
+@@ -82,12 +82,7 @@
+                               to 'client'.
+ 
+   Actions:
+-    --generate              - generate the wrapper module and setup.py,
+-                              compilation is to be run via:
+-                                'python -m build -n -w'
+-                              installation is to be run via:
+-                                'python -m pip install dist/<wheel>'
+-    --build                 - generate the wrapper module and compile it
++    --build                 - generate the wrapper and compile it
+     --compile               - recompile the (previously generated) module
+     --install               - install the wrapper in the local site-packages
+     --egg-info              - ask distutils setup() to generate egg info, and
+@@ -102,7 +97,7 @@
+     --wininst               - create an installer application for Microsoft
+                               Windows
+ 
+-  Other distutils/setuptools options (they are passed right through):
++  Other distutils/setuptools options (there are passed right through):
+     --compiler COMPILER     - use COMPILER instead of the platform default
+     --root ROOTDIR
+     --install-dir INSTALLDIR
+Index: jcc3/cpp.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/jcc3/cpp.py b/jcc3/cpp.py
+--- a/jcc3/cpp.py	(revision 1915627)
++++ b/jcc3/cpp.py	(revision 1915626)
+@@ -426,7 +426,6 @@
+     vmargs = ['-Djava.awt.headless=true']
+     moduleName = None
+     modules = []
+-    generate = False
+     build = False
+     install = False
+     recompile = False
+@@ -494,9 +493,6 @@
+             elif arg == '--module':
+                 i += 1
+                 modules.append(args[i])
+-            elif arg == '--generate':
+-                from .python import compile
+-                generate = True
+             elif arg == '--build':
+                 from .python import compile
+                 build = True
+@@ -622,7 +618,7 @@
+             raise ValueError('module name not specified (use --python)')
+         else:
+             compile(env, os.path.dirname(args[0]), output, moduleName,
+-                    False, install, dist, debug, jars, version,
++                    install, dist, debug, jars, version,
+                     prefix, root, install_dir, home_dir, use_distutils,
+                     shared, compiler, modules, wheel, wininst, find_jvm_dll,
+                     arch, generics, resources, imports, use_full_names,
+@@ -776,9 +772,9 @@
+             module(out, allInOne, done, imports, cppdir, moduleName,
+                    shared, generics, use_full_names)
+             out.close()
+-            if build or generate or install or dist or egg_info:
++            if build or install or dist or egg_info:
+                 compile(env, os.path.dirname(args[0]), output, moduleName,
+-                        generate, install, dist, debug, jars, version,
++                        install, dist, debug, jars, version,
+                         prefix, root, install_dir, home_dir, use_distutils,
+                         shared, compiler, modules, wheel, wininst, find_jvm_dll,
+                         arch, generics, resources, imports, use_full_names,
+Index: jcc3/python.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/jcc3/python.py b/jcc3/python.py
+--- a/jcc3/python.py	(revision 1915627)
++++ b/jcc3/python.py	(revision 1915626)
+@@ -1588,8 +1588,7 @@
+     line(out, 0, '}')
+ 
+ 
+-def compile(env, jccPath, output, moduleName,
+-            generate, install, dist, debug, jars,
++def compile(env, jccPath, output, moduleName, install, dist, debug, jars,
+             version, prefix, root, install_dir, home_dir, use_distutils,
+             shared, compiler, modules, wheel, wininst, find_jvm_dll, arch,
+             generics, resources, imports, use_full_names, egg_info,
+@@ -1872,40 +1871,23 @@
+                 i += 1
+         config_vars['CFLAGS'] = ' '.join(cflags)
+ 
+-    if generate:
+-        out = open(os.path.join(".", "setup.py"), "w")
+-        line(out, 0, 'from setuptools import setup, Extension')
+-        line(out, 0, 'setup(')
+-        line(out, 1, 'name="%s",', moduleName)
+-        line(out, 1, 'packages=%s,', packages)
+-        line(out, 1, 'package_dir={"%s": "%s"},', moduleName, modulePath)
+-        line(out, 1, 'package_data={"%s": %s},', moduleName, package_data)
+-        line(out, 1, 'ext_modules=[Extension("%s.%s",', moduleName, extname)
+-        for arg, value in args.items():
+-            line(out, 2, '%s=%s,', arg, value)
+-        line(out, 1, ")],")
+-        if version:
+-            line(out, 1, 'version="%s",', version)
+-        line(out, 1, 'zip_safe=False,')
+-        line(out, 0, ')')
+-        out.close()
+-    else:
+-        print("extension args = %s" % args)
+-        extensions = [Extension('.'.join([moduleName, extname]), **args)]
+-        script_args.extend(extra_setup_args)
++    print("extension args = %s" % args)
++    extensions = [Extension('.'.join([moduleName, extname]), **args)]
++    script_args.extend(extra_setup_args)
+ 
+-        setup_args = {
+-            'name': moduleName,
+-            'packages': packages,
+-            'package_dir': {moduleName: modulePath},
+-            'package_data': {moduleName: package_data},
+-            'ext_modules': extensions,
+-            'script_args': script_args
+-        }
+-        if version:
+-            setup_args['version'] = version
+-        if with_setuptools:
+-            setup_args['zip_safe'] = False
++    args = {
++        'name': moduleName,
++        'packages': packages,
++        'package_dir': {moduleName: modulePath},
++        'package_data': {moduleName: package_data},
++        'ext_modules': extensions,
++        'script_args': script_args
++    }
++    if version:
++        args['version'] = version
++    if with_setuptools:
++        args['zip_safe'] = False
+ 
+-            print("setup args = %s" % setup_args)
+-            setup(**setup_args)
++    print("setup args = %s" % args)
++
++    setup(**args)
+Index: jcc3/sources/jcc.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/jcc3/sources/jcc.cpp b/jcc3/sources/jcc.cpp
+--- a/jcc3/sources/jcc.cpp	(revision 1915627)
++++ b/jcc3/sources/jcc.cpp	(revision 1915626)
+@@ -132,10 +132,9 @@
+ 
+ static void add_option(char *name, const char *value, JavaVMOption *option)
+ {
+-    size_t size = strlen(name) + strlen(value) + 1;
+-    char *buf = (char *) malloc(size);
++    char *buf = (char *) malloc(strlen(name) + strlen(value) + 1);
+ 
+-    snprintf(buf, size, "%s%s", name, value);
++    sprintf(buf, "%s%s", name, value);
+     option->optionString = buf;
+ }
+ 
+@@ -143,15 +142,14 @@
+ static void add_paths(char *name, const char *p0, const char *p1,
+                       JavaVMOption *option)
+ {
+-    size_t size = strlen(name) + strlen(p0) + strlen(p1) + 4;
+ #if defined(_MSC_VER) || defined(__WIN32)
+     char pathsep = ';';
+ #else
+     char pathsep = ':';
+ #endif
+-    char *buf = (char *) malloc(size);
++    char *buf = (char *) malloc(strlen(name) + strlen(p0) + strlen(p1) + 4);
+ 
+-    snprintf(buf, size, "%s%s%c%s", name, p0, pathsep, p1);
++    sprintf(buf, "%s%s%c%s", name, p0, pathsep, p1);
+     option->optionString = buf;
+ }
+ #endif
+@@ -213,7 +211,7 @@
+     uintmax_t hash = (uintmax_t) PyObject_Hash(arg);
+     char buffer[hexdig + 1];
+ 
+-    snprintf(buffer, sizeof(buffer), "%0*" PRIxMAX, (int) hexdig, hash);
++    sprintf(buffer, "%0*" PRIxMAX, (int) hexdig, hash);
+     return PyUnicode_FromStringAndSize(buffer, hexdig);
+ }
+ #endif
+diff --git a/CHANGES b/CHANGES
+index b145170a5ca08ea67f6ff903199f9f854431d226..0436ed7d0ec8098f6b7ff609ff77b8e3ff4f0309
+GIT binary patch
+literal 16056
+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
+AfB*mh
+

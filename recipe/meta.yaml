@@ -7,14 +7,13 @@ package:
   version: {{ version }}
 
 source:
-  # fn: {{ name }}-{{ version }}.tar.gz
-  # url: https://files.pythonhosted.org/packages/a8/a5/bb6344ffe68a2987535becc33c32587e8c57f5971864926c078dff10ac4f/{{ name }}-{{ version }}.tar.gz
-  # sha256: {{ sha256 }}
-  svn_url: http://svn.apache.org/repos/asf/lucene/pylucene/trunk/jcc/
-  svn_rev: 1915732 # (defaults to head)
-  svn_ignore_externals: True # (defaults to False)
+  fn: {{ name }}-{{ version }}.tar.gz
+  url: https://files.pythonhosted.org/packages/a8/a5/bb6344ffe68a2987535becc33c32587e8c57f5971864926c078dff10ac4f/{{ name }}-{{ version }}.tar.gz
+  sha256: {{ sha256 }}
   patches:
    - use_sysconfig.patch
+   - use_Py_SET_TYPE_with_python__=_3_11.patch
+   - added_support_for_--generate.patch
 
 build:
   number: 7
