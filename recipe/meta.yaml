@@ -1,6 +1,6 @@
 {% set name = "JCC" %}
-{% set version = "3.13" %}
-{% set sha256 = "009db5a4039d3ae98c20248bc51669343a6f36d9e4e329a3f97b8f8e63d30013" %}
+{% set version = "3.14" %}
+{% set sha256 = "1610b99ed2f6d4d553abdbbe1e6c1f4b75ba95fc654e1776426a54bf3d756156" %}
 
 package:
   name: {{ name|lower }}
@@ -8,15 +8,15 @@ package:
 
 source:
   fn: {{ name }}-{{ version }}.tar.gz
-  url: https://files.pythonhosted.org/packages/a8/a5/bb6344ffe68a2987535becc33c32587e8c57f5971864926c078dff10ac4f/{{ name }}-{{ version }}.tar.gz
+  url: https://files.pythonhosted.org/packages/0e/4f/64976854f2809efe71335476f275ad0832fbfd3e42eff605672b18922cef/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-   - use_sysconfig.patch
+  #patches:
+   #- use_sysconfig.patch
    # - use_Py_SET_TYPE_with_python__=_3_11.patch
-   - added_support_for_--generate.patch
+   #- added_support_for_--generate.patch
 
 build:
-  number: 7
+  number: 0
 
   rpaths: # only valid for linux
     - lib
