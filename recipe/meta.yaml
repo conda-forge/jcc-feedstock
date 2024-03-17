@@ -12,8 +12,6 @@ source:
   sha256: {{ sha256 }}
   patches:
    - issue_escape_package_dir.patch
-   # - use_Py_SET_TYPE_with_python__=_3_11.patch
-   #- added_support_for_--generate.patch
 
 build:
   number: 0
