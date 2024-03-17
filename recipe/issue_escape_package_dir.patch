@@ -1,0 +1,14 @@
+Index: jcc3/python.py
+<+>UTF-8
+===================================================================
+--- jcc3/python.py	(original)
++++ jcc3/python.py	(working copy)
+@@ -1878,7 +1878,7 @@
+         line(out, 0, 'setup(')
+         line(out, 1, 'name="%s",', moduleName)
+         line(out, 1, 'packages=%s,', packages)
+-        line(out, 1, 'package_dir={"%s": "%s"},', moduleName, modulePath)
++        line(out, 1, 'package_dir={"%s": "%s"},', moduleName, modulePath.replace("\\", "\\\\") if os.name == 'nt' else modulePath)
+         line(out, 1, 'package_data={"%s": %s},', moduleName, package_data)
+         line(out, 1, 'ext_modules=[Extension("%s.%s",', moduleName, extname)
+         for arg, value in args.items():

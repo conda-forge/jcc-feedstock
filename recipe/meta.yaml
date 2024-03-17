@@ -10,8 +10,8 @@ source:
   fn: {{ name }}-{{ version }}.tar.gz
   url: https://files.pythonhosted.org/packages/0e/4f/64976854f2809efe71335476f275ad0832fbfd3e42eff605672b18922cef/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  #patches:
-   #- use_sysconfig.patch
+  patches:
+   - issue_escape_package_dir.patch
    # - use_Py_SET_TYPE_with_python__=_3_11.patch
    #- added_support_for_--generate.patch
 
