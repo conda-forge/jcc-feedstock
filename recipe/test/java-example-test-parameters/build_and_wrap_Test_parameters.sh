@@ -3,5 +3,6 @@ javac org/jcc/test/Test_parameter_order.java org/jcc/test/Animal.java org/jcc/te
 
 jar cf Test_parameter_order.jar org
 
-python -m jcc --use_full_names --jar Test_parameter_order.jar --python test2 --package org.jcc.test --build --install
-
+python -m jcc --use_full_names --jar Test_parameter_order.jar --python test2 --package org.jcc.test --generate
+python -m build -nw
+python -m pip install dist/*.whl --force

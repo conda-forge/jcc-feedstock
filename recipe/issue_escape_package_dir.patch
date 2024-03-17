@@ -1,0 +1,19 @@
+Subject: [PATCH] Double escape in file
+---
+Index: jcc3/python.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/jcc3/python.py b/jcc3/python.py
+--- a/jcc3/python.py	(revision 1916365)
++++ b/jcc3/python.py	(date 1710675291406)
+@@ -1878,7 +1878,7 @@
+         line(out, 0, 'setup(')
+         line(out, 1, 'name="%s",', moduleName)
+         line(out, 1, 'packages=%s,', packages)
+-        line(out, 1, 'package_dir={"%s": "%s"},', moduleName, modulePath)
++        line(out, 1, 'package_dir={"%s": "%s"},', moduleName, modulePath.replace("\\", "\\\\") if os.name == 'nt' else modulePath)
+         line(out, 1, 'package_data={"%s": %s},', moduleName, package_data)
+         line(out, 1, 'ext_modules=[Extension("%s.%s",', moduleName, extname)
+         for arg, value in args.items():
