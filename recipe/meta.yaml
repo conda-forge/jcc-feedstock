@@ -11,10 +11,10 @@ source:
   url: https://files.pythonhosted.org/packages/0e/4f/64976854f2809efe71335476f275ad0832fbfd3e42eff605672b18922cef/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
   patches:
-   - issue_escape_package_dir.patch
+   - jcc_python.patch
 
 build:
-  number: 0
+  number: 1
 
   rpaths: # only valid for linux
     - lib
