@@ -14,7 +14,7 @@ source:
    - issue_escape_package_dir.patch
 
 build:
-  number: 0
+  number: 1
 
   rpaths: # only valid for linux
     - lib
