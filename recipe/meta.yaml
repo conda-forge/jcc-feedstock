@@ -14,7 +14,7 @@ source:
    - jcc_python.patch
 
 build:
-  number: 2
+  number: 3
 
   rpaths: # only valid for linux
     - lib
