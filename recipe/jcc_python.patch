@@ -1,0 +1,28 @@
+Index: jcc3/python.py
+===================================================================
+--- jcc3/python.py	(revision 1915627)
++++ jcc3/python.py	(working copy)
+@@ -1878,11 +1878,20 @@
+         line(out, 0, 'setup(')
+         line(out, 1, 'name="%s",', moduleName)
+         line(out, 1, 'packages=%s,', packages)
+-        line(out, 1, 'package_dir={"%s": "%s"},', moduleName, modulePath)
+-        line(out, 1, 'package_data={"%s": %s},', moduleName, package_data)
++        line(out, 1, 'package_dir={"%s": r"%s"},', moduleName, modulePath)
++        line(out, 1, 'package_data={"%s": [', moduleName)
++        for pd in package_data:
++            line(out, 2, 'r"%s",', pd)
++        line(out, 1, ']},')
+         line(out, 1, 'ext_modules=[Extension("%s.%s",', moduleName, extname)
+         for arg, value in args.items():
+-            line(out, 2, '%s=%s,', arg, value)
++            if arg in ('define_macros', 'libraries'):
++                line(out, 2, '%s=%s,', arg, value)
++            else:
++                line(out, 2, '%s=[', arg)
++                for v in value:
++                    line(out, 3, 'r"%s",', v)
++                line(out, 2, '],')
+         line(out, 1, ")],")
+         if version:
+             line(out, 1, 'version="%s",', version)
