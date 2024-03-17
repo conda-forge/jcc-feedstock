@@ -6,4 +6,4 @@ python -m jcc --use_full_names --find-jvm-dll server --jar Test_parameter_order.
 python -m build -nw
 cd dist
 dir
-python -m pip install *.whl --force
+for %%f in (dist\*.whl) do pip install "%%f" --force
