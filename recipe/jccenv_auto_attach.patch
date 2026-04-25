@@ -1,0 +1,24 @@
+--- a/jcc3/sources/JCCEnv.h
++++ b/jcc3/sources/JCCEnv.h
+@@ -106,12 +106,18 @@ public:
+ #if defined(_MSC_VER) || defined(__WIN32)
+     inline JNIEnv *get_vm_env() const
+     {
+-        return (JNIEnv *) TlsGetValue(VM_ENV);
++        JNIEnv *jenv = (JNIEnv *) TlsGetValue(VM_ENV);
++        if (!jenv && vm)
++            const_cast<JCCEnv *>(this)->attachCurrentThread(NULL, 1);
++        return (JNIEnv *) TlsGetValue(VM_ENV);
+     }
+ #else
+     static pthread_key_t VM_ENV;
+ 
+     inline JNIEnv *get_vm_env() const
+     {
+-        return (JNIEnv *) pthread_getspecific(VM_ENV);
++        JNIEnv *jenv = (JNIEnv *) pthread_getspecific(VM_ENV);
++        if (!jenv && vm)
++            const_cast<JCCEnv *>(this)->attachCurrentThread(NULL, 1);
++        return (JNIEnv *) pthread_getspecific(VM_ENV);
+     }
+ #endif
