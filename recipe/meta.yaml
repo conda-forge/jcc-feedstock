@@ -14,7 +14,7 @@ source:
    - jccenv_auto_attach.patch
 
 build:
-  number: 0
+  number: 1
 
   rpaths: # only valid for linux
     - lib
